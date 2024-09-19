@@ -68,22 +68,12 @@ if (!isset($_SESSION['email'])) {
             </table>
         </div>
 
-        <div id="confirmArchivePopup">
-            <p>Are you sure you want to archive this item?</p>
-            <div class="button-container">
-                <button onclick="archiveItem()">Yes</button>
-                <button onclick="closePopup()">No</button>
-            </div>
-        </div>
-
-        <div id="overlay"></div>
     </div>
 
     <script src="menu.js"></script>
     <script src="popup.js"></script>
     <script src="get-exams.js"></script>
-    <script src="adjust-table.js"></script>
-    <script src="archive-popup.js"></script>
+    <script src="archive.js"></script>
 </body>
 
 </html>

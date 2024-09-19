@@ -1,39 +1,35 @@
 <?php
+header('Content-Type: application/json');
+
+// Get the request body and decode the JSON
+$data = json_decode(file_get_contents('php://input'), true); // debug
+$idexamsession = $data['idexamsession'];
+
+// Start the session and include the database connection
 session_start();
 require '../db_connection.php';
 
-error_log("archive.php accessed");
-
-$data = json_decode(file_get_contents("php://input"), true);
-
-if (isset($data['id'])) {
-    $itemId = $data['id'];
-    error_log("Attempting to archive item with ID: " . $itemId);
-
-    $sql = "UPDATE examsession SET archived = 1 WHERE idexamsession = ?";
-    $stmt = $conn->prepare($sql);
-
-    if (!$stmt) {
-        echo json_encode(['success' => false, 'error' => 'SQL Prepare Error: ' . $conn->error]);
-        exit();
-    }
-
-    $stmt->bind_param("i", $itemId);
-    $response = [];
-
-    if ($stmt->execute()) {
-        $response['success'] = true;
-    } else {
-        $response['success'] = false;
-        $response['error'] = $stmt->error;
-        error_log("Failed to execute SQL: " . $sql . " with ID: " . $itemId);
-    }
-
-    $stmt->close();
-    $conn->close();
-
-    header('Content-Type: application/json');
-    echo json_encode($response);
-} else {
-    echo json_encode(['success' => false, 'error' => 'Invalid input']);
+// Prepare and execute the SQL query to update the `archived` field
+$stmt = $conn->prepare("UPDATE examsession SET archived = 1 WHERE idexamsession = ?");
+if (!$stmt) {
+    error_log('Prepare failed: ' . $conn->error);
+    echo json_encode(['success' => false, 'error' => 'SQL prepare failed']);
+    exit();
 }
+
+$stmt->bind_param("i", $idexamsession);
+
+if ($stmt->execute()) {
+    if ($stmt->affected_rows > 0) {
+        echo json_encode(['success' => true]);
+    } else {
+        // No rows affected
+        error_log('No rows updated for idexamsession: ' . $idexamsession);
+        echo json_encode(['success' => false, 'error' => 'No rows updated']);
+    }
+} else {
+    error_log('Execute failed: ' . $stmt->error);
+    echo json_encode(['success' => false, 'error' => 'SQL execute failed']);
+}
+$stmt->close();
+$conn->close();

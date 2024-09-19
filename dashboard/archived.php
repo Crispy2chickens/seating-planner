@@ -42,7 +42,7 @@ if (!isset($_SESSION['email'])) {
         </div>
 
         <div class="search">
-            <input class="search-bar" type="text" placeholder="Search Upcoming Exam Sessions">
+            <input class="search-bar" type="text" placeholder="Search Archived">
             <button class="filter">Filter</button>
         </div>
 
@@ -72,7 +72,6 @@ if (!isset($_SESSION['email'])) {
     <script src="menu.js"></script>
     <script src="popup.js"></script>
     <script src="get-archived-exams.js"></script>
-    <script src="adjust-table.js"></script>
 </body>
 
 </html>

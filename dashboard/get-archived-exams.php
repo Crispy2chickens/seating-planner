@@ -2,7 +2,7 @@
 session_start();
 require '../db_connection.php';
 
-$sql = "SELECT title, date, starttime FROM examsession WHERE archived = 1;";
+$sql = "SELECT idexamsession, title, date, starttime FROM examsession WHERE archived = 1;";
 $result = $conn->query($sql);
 
 $data = [];
