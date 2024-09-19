@@ -3,7 +3,7 @@ document.addEventListener('tableUpdated', () => {
     let currentRowCount = tableBody.rows.length; 
 
     if (currentRowCount < 10) {
-        for (let i = currentRowCount; i < 10; i++) {
+        for (let i = currentRowCount; i < 9; i++) {
             let tr = document.createElement('tr');
             tr.innerHTML = `<td>&nbsp;</td>
                             <td>&nbsp;</td>

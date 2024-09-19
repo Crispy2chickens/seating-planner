@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'db_connection.php';
+require '../db_connection.php';
 
 $sql = "SELECT title, date, starttime FROM examsession WHERE archived = 0;";
 $result = $conn->query($sql);

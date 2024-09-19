@@ -22,8 +22,8 @@ if (!isset($_SESSION['email'])) {
     <div class="menu-bar">
         <div class="left-menu-bar">
             <img src="../img/logo.png" alt="Logo" class="logo-dashboard">
-            <a href="u0.php" class="nav-link active" onclick="setActive(this)">Upcoming Seating Plans</a>
-            <a href="archived.php" class="nav-link" onclick="setActive(this)">Archived</a>
+            <a href="u0.php" class="nav-link" onclick="setActive(this)">Upcoming Seating Plans</a>
+            <a href="archived.php" class="nav-link active" onclick="setActive(this)">Archived</a>
             <a href="teachers.php" class="nav-link" onclick="setActive(this)">Teachers</a>
         </div>
 
@@ -37,7 +37,7 @@ if (!isset($_SESSION['email'])) {
     </div>
     <div class="main-container">
         <div class="top">
-            <h1>Upcoming Exam Sessions</h1>
+            <h1>Archived</h1>
             <button class="add-exam">Add new</button>
         </div>
 
@@ -67,23 +67,12 @@ if (!isset($_SESSION['email'])) {
                 </tbody>
             </table>
         </div>
-
-        <div id="confirmArchivePopup">
-            <p>Are you sure you want to archive this item?</p>
-            <div class="button-container">
-                <button onclick="archiveItem()">Yes</button>
-                <button onclick="closePopup()">No</button>
-            </div>
-        </div>
-
-        <div id="overlay"></div>
     </div>
 
     <script src="menu.js"></script>
     <script src="popup.js"></script>
-    <script src="get-exams.js"></script>
+    <script src="get-archived-exams.js"></script>
     <script src="adjust-table.js"></script>
-    <script src="archive-popup.js"></script>
 </body>
 
 </html>

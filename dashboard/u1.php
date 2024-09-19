@@ -20,7 +20,7 @@ if (!isset($_SESSION['email'])) {
 
 <body>
     <div class="menu-bar">
-        <img src="../logo.png" alt="Logo" class="logo-dashboard">
+        <img src="../img/logo.png" alt="Logo" class="logo-dashboard">
         <div class="user-name" onclick="myFunction()"><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?>
             <span class="popuptext" id="myPopup">
                 <a href="change-password.php">Change Password</a>
