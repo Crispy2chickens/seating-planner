@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['coordinator'] = $user['coordinator'];
 
         if ($user['coordinator'] == 1) {
-            header("Location: coordinator_dashboard.php");
+            header("Location: dashboard/u0.php");
         } else {
-            header("Location: dashboard.php");
+            header("Location: dashboard/u1.php");
         }
         exit();
     } else {

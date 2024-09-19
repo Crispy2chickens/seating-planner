@@ -1,47 +1,35 @@
-<?php
-session_start();
-require 'db_connection.php';
+<!DOCTYPE html>
+<html lang="en">
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $new_password = $_POST['new-password'];
-    $confirm_password = $_POST['confirm-password'];
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Change Password</title>
+</head>
 
-    $user_email = $_SESSION['email'];
+<body>
+    <div class="center-container">
+        <img src="logo.png" alt="Logo" class="logo">
+        <h1>Change Password</h1>
 
-    // Check if new passwords match
-    if ($new_password !== $confirm_password) {
-        $_SESSION['error'] = "New passwords do not match.";
-        header("Location: change-password-page.php");
-        exit;
-    }
+        <form action="change-password-logic.php" method="post">
+            <label for="new-password">New Password:</label>
+            <input type="password" id="new-password" name="new-password" required>
+            <label for="confirm-password">Confirm New Password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
 
-    $sql = "SELECT idusers FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $user_email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+            <?php
+            session_start();
+            if (isset($_SESSION['error'])) {
+                echo "<p class='error-message'>" . $_SESSION['error'] . "</p>";
+                unset($_SESSION['error']);
+            }
+            ?>
 
-    if ($user) {
-        $user_id = $user['idusers'];
+            <button type="submit" class="change-password-button">Change Password</button>
+        </form>
+    </div>
+</body>
 
-        // Update password in the database (plaintext)
-        $sql = "UPDATE users SET password = ? WHERE idusers = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('si', $new_password, $user_id);
-        if ($stmt->execute()) {
-            header("Location: index.php");
-            exit();
-        } else {
-            $_SESSION['error'] = "Error changing password.";
-            header("Location: change-password-page.php");
-            exit();
-        }
-
-        $stmt->close();
-    } else {
-        echo "User not found.";
-    }
-
-    $conn->close();
-}
+</html>
