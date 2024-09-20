@@ -1,29 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let examsData = [];  // Store the fetched exam data here
+    let teacherData = [];  // Store the fetched exam data here
 
     // Fetch exam data and render table
-    fetch('get-exams.php')
+    fetch('get-teachers.php')
     .then(response => response.json())
     .then(data => {
-        examsData = data;  // Store data for later use in filtering
-
-        // Sort by date and start time initially
-        data.sort((a, b) => {
-            let dateComparison = new Date(a.date) - new Date(b.date);
-            if (dateComparison === 0) {
-                let timeA = new Date(`1970-01-01T${a.starttime}`);
-                let timeB = new Date(`1970-01-01T${b.starttime}`);
-                return timeA - timeB;
-            }
-            return dateComparison;
-        });
+        teacherData = data;  // Store data for later use in filtering
 
         renderTable(data);  // Initial table rendering
 
         // Search bar input listener
         document.querySelector('.search-bar').addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();  // Convert to lowercase for case-insensitive search
-            const filteredData = examsData.filter(exam => exam.title.toLowerCase().includes(searchTerm));
+
+            const filteredData = teacherData.filter(teacher => 
+                `${teacher.firstname} ${teacher.lastname}`.toLowerCase().includes(searchTerm)
+            );
 
             renderTable(filteredData);  // Re-render the table with filtered data
         });
@@ -38,13 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Insert rows dynamically based on the provided data
         data.forEach(row => {
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${row.title}</td>
-                            <td>${row.date}</td>
-                            <td>${row.starttime}</td>
+            tr.innerHTML = `<td>${row.firstname} ${row.lastname}</td>
+                            <td>${row.email}</td>
                             <td>
                                 <button class="operation-buttons edit-btn"><img src="../img/edit-icon.png"></button>
-                                <button class="operation-buttons print-btn"><img src="../img/print-icon.png"></button>
-                                <button class="operation-buttons archive-btn" data-id="${row.idexamsession}"><img src="../img/archive-icon.png"></button>
                                 <button class="operation-buttons trash-btn"><img src="../img/trash-icon.png"></button>
                             </td>`;
             tableBody.appendChild(tr);

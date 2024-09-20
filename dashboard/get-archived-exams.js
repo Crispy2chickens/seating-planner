@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add empty rows if the table has fewer than 10 rows
         if (currentRowCount < 10) {
-            for (let i = currentRowCount; i < 9; i++) {
+            for (let i = currentRowCount; i < 10; i++) {
                 let tr = document.createElement('tr');
                 tr.innerHTML = `<td>&nbsp;</td>
                                 <td>&nbsp;</td>

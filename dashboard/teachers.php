@@ -36,29 +36,24 @@ if (!isset($_SESSION['email'])) {
         </div>
     </div>
     <div class="main-container">
-        <div class="top">
+        <div class="top-teachers">
             <h1>Teachers</h1>
-            <button class="add-exam">Add new</button>
+            <button class="add">Add new</button>
         </div>
 
-        <div class="search">
-            <input class="search-bar" type="text" placeholder="Search Upcoming Exam Sessions">
-            <button class="filter">Filter</button>
-        </div>
+        <input class="search-bar" type="text" placeholder="Search Teachers">
 
         <div class="table-container">
             <table id="data-table">
                 <colgroup>
-                    <col class="title">
-                    <col class="date">
-                    <col class="starttime">
-                    <col>
+                    <col class="name">
+                    <col class="email">
+                    <col class="operation">
                 </colgroup>
                 <thead>
                     <tr class="table-height-exception">
-                        <th>Title</th>
-                        <th>Date</th>
-                        <th>Start Time</th>
+                        <th>Name</th>
+                        <th>Email</th>
                         <th>Operation</th>
                     </tr>
                 </thead>
@@ -71,7 +66,7 @@ if (!isset($_SESSION['email'])) {
 
     <script src="menu.js"></script>
     <script src="popup.js"></script>
-    <script src="get-exams.js"></script>
+    <script src="get-teachers.js"></script>
     <script src="adjust-table.js"></script>
 </body>
 

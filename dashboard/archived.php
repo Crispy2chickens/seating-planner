@@ -38,13 +38,9 @@ if (!isset($_SESSION['email'])) {
     <div class="main-container">
         <div class="top">
             <h1>Archived</h1>
-            <button class="add-exam">Add new</button>
         </div>
 
-        <div class="search">
-            <input class="search-bar" type="text" placeholder="Search Archived">
-            <button class="filter">Filter</button>
-        </div>
+        <input class="search-bar" type="text" placeholder="Search Archived">
 
         <div class="table-container">
             <table id="data-table">

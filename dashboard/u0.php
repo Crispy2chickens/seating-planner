@@ -29,7 +29,7 @@ if (!isset($_SESSION['email'])) {
 
         <div class="user-name" onclick="myFunction()"><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?>
             <span class="popuptext" id="myPopup">
-                <a href="change-password.php">Change Password</a>
+                <a href="../change-password.php">Change Password</a>
                 <a href="../logout.php">Log out</a>
             </span>
             <!-- https://www.w3schools.com/howto/howto_js_popup.asp -->
@@ -38,13 +38,10 @@ if (!isset($_SESSION['email'])) {
     <div class="main-container">
         <div class="top">
             <h1>Upcoming Exam Sessions</h1>
-            <button class="add-exam">Add new</button>
+            <button class="add">Add new</button>
         </div>
 
-        <div class="search">
-            <input class="search-bar" type="text" placeholder="Search Upcoming Exam Sessions">
-            <button class="filter">Filter</button>
-        </div>
+        <input class="search-bar" type="text" placeholder="Search Upcoming Exam Sessions">
 
         <div class="table-container">
             <table id="data-table">

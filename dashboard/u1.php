@@ -34,10 +34,7 @@ if (!isset($_SESSION['email'])) {
             <h1>Upcoming Invigilations</h1>
         </div>
 
-        <div class="search">
-            <input class="search-bar" type="text" placeholder="Search Upcoming Invigilations">
-            <button class="filter">Filter</button>
-        </div>
+        <input class="search-bar" type="text" placeholder="Search Upcoming Invigilations">
     </div>
 
     <script src="popup.js"></script>

@@ -10,7 +10,7 @@
 
 <body>
     <div class="center-container">
-        <img src="logo.png" alt="Logo" class="logo">
+        <img src="img/logo.png" alt="Logo" class="logo">
         <h1>Change Password</h1>
 
         <form action="change-password-logic.php" method="post">
