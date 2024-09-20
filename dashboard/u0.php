@@ -67,10 +67,36 @@ if (!isset($_SESSION['email'])) {
 
     </div>
 
+    <div class="exam-modal">
+        <div class="exam-modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-h2">Add New Exam Session</h2>
+            <form id="new-exam-form">
+                <div class="add-new-containers">
+                    <label for="new-exam-title">Title:</label>
+                    <input type="text" id="new-exam-title" name="title" placeholder="Enter exam title" required>
+                </div>
+
+                <div class="add-new-containers">
+                    <label for="new-exam-date">Date:</label>
+                    <input type="date" id="new-exam-date" name="date" required>
+                </div>
+
+                <div class="add-new-containers">
+                    <label for="new-exam-startingtime">Starting Time:</label>
+                    <input type="time" id="new-exam-startingtime" name="startingtime" required>
+                </div>
+
+                <button type="submit" class="submit-new-exam">Submit</button>
+            </form>
+        </div>
+    </div>
+
     <script src="menu.js"></script>
     <script src="popup.js"></script>
     <script src="get-exams.js"></script>
     <script src="archive.js"></script>
+    <script src="add-new.js"></script>
 </body>
 
 </html>
