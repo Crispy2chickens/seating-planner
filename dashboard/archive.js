@@ -1,31 +1,32 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Event delegation for archive button
-    document.querySelector('#data-table').addEventListener('click', function(e) {
-        // Check if the clicked element is an archive button
-        const archiveButton = e.target.closest('.archive-btn');
-        if (archiveButton) {
-            let examSessionId = archiveButton.getAttribute('data-id');
+document.querySelector('#data-table').addEventListener('click', function(e) {
+    const button = e.target.closest('.operation-buttons');
+    if (button) {
+        let examSessionId = button.getAttribute('data-id');
+        let action = button.getAttribute('data-action');
+
+        let confirmationMessage = action === 'archive' ? 
+            'Are you sure you want to archive this session?' :
+            'Are you sure you want to unarchive this session?';
+
+        if (confirm(confirmationMessage)) {
+            let endpoint = action === 'archive' ? 'archive.php' : 'unarchive.php';
             
-            if (confirm('Are you sure you want to archive this session?')) {
-                fetch('archive.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ idexamsession: examSessionId })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload();
-                    } else {
-                        alert('Failed to archive the session.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            }
-        } else {
-            console.log('No archive button clicked');
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ idexamsession: examSessionId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert(`Failed to ${action} the session.`);
+                }
+            })
+            .catch(error => console.error('Error:', error));
         }
-    });
+    }
 });

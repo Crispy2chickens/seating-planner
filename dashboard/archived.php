@@ -68,6 +68,7 @@ if (!isset($_SESSION['email'])) {
     <script src="menu.js"></script>
     <script src="popup.js"></script>
     <script src="get-archived-exams.js"></script>
+    <script src="archive.js"></script>
 </body>
 
 </html>
