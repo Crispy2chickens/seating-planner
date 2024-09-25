@@ -68,26 +68,31 @@ if (!isset($_SESSION['email'])) {
         <div class="teacher-modal-content">
             <span class="close">&times;</span>
             <h2 class="modal-h2">Add New Teacher</h2>
-            <form id="new-exam-form">
+            <form id="new-teacher-form">
                 <div class="add-new-containers">
                     <label for="new-teacher-email">Email Address:</label>
-                    <input type="text" id="new-teacher-email" name="email" placeholder="Enter email address" required>
+                    <input type="email" id="new-teacher-email" name="email" placeholder="Enter email address">
                 </div>
 
                 <div class="add-new-containers">
-                    <label for="new-teacher-fn">First name:</label>
-                    <input type="text" id="new-teacher-fn" name="fname" placeholder="Enter first name" required>
+                    <label for="new-teacher-firstname">First Name:</label>
+                    <input type="text" id="new-teacher-firstname" name="firstname" placeholder="Enter first name">
 
-                    <label for="new-exam-title">Last name:</label>
-                    <input type="text" id="new-teacher-ln" name="lname" placeholder="Enter last name" required>
+                    <label for="new-teacher-lastname">Last Name:</label>
+                    <input type="text" id="new-teacher-lastname" name="lastname" placeholder="Enter last name">
                 </div>
 
                 <div class="add-new-containers">
                     <label for="new-teacher-password">Password:</label>
-                    <input type="text" id="new-teacher-password" name="password" placeholder="Enter password" required>
+                    <input type="password" id="new-teacher-password" name="password" placeholder="Enter password">
                 </div>
 
-                <button type="submit" class="submit-new-exam">Submit</button>
+                <div class="add-new-containers">
+                    <label for="new-teacher-coordinator">Coordinator:</label>
+                    <input type="checkbox" id="new-teacher-coordinator" name="coordinator">
+                </div>
+
+                <button type="submit" class="submit-new-teacher">Submit</button>
             </form>
         </div>
     </div>
@@ -95,7 +100,7 @@ if (!isset($_SESSION['email'])) {
     <script src="menu.js"></script>
     <script src="popup.js"></script>
     <script src="get-teachers.js"></script>
-    <script src="add-new.js"></script>
+    <script src="add-teacher.js"></script>
     <script src="delete.js"></script>
 </body>
 

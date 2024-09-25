@@ -230,17 +230,23 @@ td{
     background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
 }
 
-/* Modal content */
 .exam-modal-content, .teacher-modal-content {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 30px;
     border: none;
+}
+
+.exam-modal-content{
     width: 80%;
     max-width: 500px;
 }
 
-/* Close button */
+.teacher-modal-content{
+    width: 90%;
+    max-width: 600px;
+}
+
 .close {
     color: #aaa;
     float: right;
@@ -259,11 +265,12 @@ td{
     margin: 0 0 40px 0;
 }
 
-.exam-modal-content label, .exam-modal-content input, .exam-modal-content button{
+.exam-modal-content label, .exam-modal-content input, .exam-modal-content button,
+.teacher-modal-content label, .teacher-modal-content input, .teacher-modal-content button{
     font-size: 18px;
 }
 
-.exam-modal-content input{
+.exam-modal-content input, .teacher-modal-content input{
     padding: 5px;
     border: 1px solid black;
     border-radius: 10px;
@@ -274,11 +281,20 @@ td{
     width: 80%;
 }
 
+#new-teacher-email{
+    width: 50%;
+}
+
+#new-teacher-firstname{
+    margin: 0 40px 0 0;
+    width: 20%;
+}
+
 .add-new-containers{
     display: block;
 }
 
-.submit-new-exam {
+.submit-new-exam, .submit-new-teacher {
     display: block;
     width: 20%; 
     background-color: #071a45;

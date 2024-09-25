@@ -1,11 +1,11 @@
 <?php
 $servername = "localhost:3306";
 $username = "root";  // Replace with your database username
-$password = "Apple123!";  // Replace with your database password
+$serverpassword = "Apple123!";  // Replace with your database password
 $dbname = "seatingplanner";  // Replace with your database name
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $serverpassword, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
