@@ -64,10 +64,39 @@ if (!isset($_SESSION['email'])) {
         </div>
     </div>
 
+    <div class="teacher-modal">
+        <div class="teacher-modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-h2">Add New Teacher</h2>
+            <form id="new-exam-form">
+                <div class="add-new-containers">
+                    <label for="new-teacher-email">Email Address:</label>
+                    <input type="text" id="new-teacher-email" name="email" placeholder="Enter email address" required>
+                </div>
+
+                <div class="add-new-containers">
+                    <label for="new-teacher-fn">First name:</label>
+                    <input type="text" id="new-teacher-fn" name="fname" placeholder="Enter first name" required>
+
+                    <label for="new-exam-title">Last name:</label>
+                    <input type="text" id="new-teacher-ln" name="lname" placeholder="Enter last name" required>
+                </div>
+
+                <div class="add-new-containers">
+                    <label for="new-teacher-password">Password:</label>
+                    <input type="text" id="new-teacher-password" name="password" placeholder="Enter password" required>
+                </div>
+
+                <button type="submit" class="submit-new-exam">Submit</button>
+            </form>
+        </div>
+    </div>
+
     <script src="menu.js"></script>
     <script src="popup.js"></script>
     <script src="get-teachers.js"></script>
-    <script src="adjust-table.js"></script>
+    <script src="add-new.js"></script>
+    <script src="delete.js"></script>
 </body>
 
 </html>

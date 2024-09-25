@@ -84,7 +84,7 @@ h1{
   
 
 .main-container{
-    padding: 30px 50px 0 50px;
+    padding: 15px 50px 0 50px;
     /* background-color: black; */
     height: calc(100vh - 100px);
 }
@@ -152,7 +152,7 @@ h1{
 }
 
 .table-container{
-    max-height: 71%;
+    max-height: 74%;
     overflow-y: auto;
     background-color: white;
     border-radius: 10px;
@@ -219,7 +219,7 @@ td{
     height: auto;
 }
 
-.exam-modal {
+.exam-modal, .teacher-modal {
     display: none; /* Hidden by default */
     position: fixed;
     z-index: 1;
@@ -231,7 +231,7 @@ td{
 }
 
 /* Modal content */
-.exam-modal-content {
+.exam-modal-content, .teacher-modal-content {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 30px;

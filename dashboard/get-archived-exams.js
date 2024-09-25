@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             <td>${row.date}</td>
                             <td>${row.starttime}</td>
                             <td>
-                                <button class="operation-buttons unarchive-btn" data-id="${row.idexamsession}" data-action="unarchive"><img src="../img/unarchive-icon.svg"></button>
-                                <button class="operation-buttons"><img src="../img/trash-icon.png"></button>
+                                <button class="operation-buttons" data-id="${row.idexamsession}" data-action="unarchive"><img src="../img/unarchive-icon.svg"></button>
+                                <button class="operation-buttons" data-id="${row.idexamsession}" data-action="delete-exam"><img src="../img/trash-icon.png"></button>
                             </td>`;
             tableBody.appendChild(tr);
         });
@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentRowCount = tableBody.rows.length;
 
         // Add empty rows if the table has fewer than 10 rows
-        if (currentRowCount < 10) {
-            for (let i = currentRowCount; i < 10; i++) {
+        if (currentRowCount < 9) {
+            for (let i = currentRowCount; i < 9; i++) {
                 let tr = document.createElement('tr');
                 tr.innerHTML = `<td>&nbsp;</td>
                                 <td>&nbsp;</td>

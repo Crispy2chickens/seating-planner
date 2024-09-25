@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.innerHTML = `<td>${row.firstname} ${row.lastname}</td>
                             <td>${row.email}</td>
                             <td>
-                                <button class="operation-buttons edit-btn"><img src="../img/edit-icon.png"></button>
-                                <button class="operation-buttons trash-btn"><img src="../img/trash-icon.png"></button>
+                                <button class="operation-buttons"><img src="../img/edit-icon.png"></button>
+                                <button class="operation-buttons" data-id="${row.idusers}" data-action="delete-teacher"><img src="../img/trash-icon.png"></button>
                             </td>`;
             tableBody.appendChild(tr);
         });

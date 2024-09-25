@@ -42,10 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             <td>${row.date}</td>
                             <td>${row.starttime}</td>
                             <td>
-                                <button class="operation-buttons edit-btn"><img src="../img/edit-icon.png"></button>
-                                <button class="operation-buttons print-btn"><img src="../img/print-icon.png"></button>
-                                <button class="operation-buttons archive-btn" data-id="${row.idexamsession}" data-action="archive"><img src="../img/archive-icon.png"></button>
-                                <button class="operation-buttons trash-btn"><img src="../img/trash-icon.png"></button>
+                                <button class="operation-buttons"><img src="../img/edit-icon.png"></button>
+                                <button class="operation-buttons"><img src="../img/print-icon.png"></button>
+                                <button class="operation-buttons" data-id="${row.idexamsession}" data-action="archive"><img src="../img/archive-icon.png"></button>
+                                <button class="operation-buttons" data-id="${row.idexamsession}" data-action="delete-exam"><img src="../img/trash-icon.png"></button>
                             </td>`;
             tableBody.appendChild(tr);
         });

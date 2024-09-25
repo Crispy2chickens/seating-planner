@@ -69,6 +69,7 @@ if (!isset($_SESSION['email'])) {
     <script src="popup.js"></script>
     <script src="get-archived-exams.js"></script>
     <script src="archive.js"></script>
+    <script src="delete.js"></script>
 </body>
 
 </html>
