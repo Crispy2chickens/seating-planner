@@ -3,6 +3,16 @@ document.addEventListener('DOMContentLoaded', function() {
     var btn = document.getElementsByClassName("add")[0];
     var span = document.getElementsByClassName("close")[0];
 
+    var modalTitle = document.querySelector(".modal-h2");
+    var submitButton = document.querySelector(".submit-teacher");
+
+    document.addEventListener('click', function(event) {
+        if (event.target && event.target.dataset.action === 'edit-teacher') {
+            modalTitle.innerText = "Edit Teacher";  // Change modal title
+            submitButton.innerText = "Save Changes";  // Change button text
+        }
+    });
+
     btn.onclick = function() {
         modal.style.display = "block";
     };
