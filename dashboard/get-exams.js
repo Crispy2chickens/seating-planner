@@ -42,7 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             <td>${row.date}</td>
                             <td>${row.starttime}</td>
                             <td>
-                                <button class="operation-buttons"><img src="../img/edit-icon.png"></button>
+                                <button class="operation-buttons" onclick="setSessionAndRedirect('${row.title}', '${row.date}', '${row.starttime}', '../seating-map/seating-map-1.php')">
+                                    <img src="../img/edit-icon.png">
+                                </button>
                                 <button class="operation-buttons"><img src="../img/print-icon.png"></button>
                                 <button class="operation-buttons" data-id="${row.idexamsession}" data-action="archive"><img src="../img/archive-icon.png"></button>
                                 <button class="operation-buttons" data-id="${row.idexamsession}" data-action="delete-exam"><img src="../img/trash-icon.png"></button>

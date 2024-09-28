@@ -1,5 +1,5 @@
 <?php
-session_start();
+include '../session.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['email'])) {
@@ -94,6 +94,7 @@ if (!isset($_SESSION['email'])) {
 
     <script src="menu.js"></script>
     <script src="popup.js"></script>
+    <script src="set-session.js"></script>
     <script src="get-exams.js"></script>
     <script src="archive.js"></script>
     <script src="add-exam.js"></script>

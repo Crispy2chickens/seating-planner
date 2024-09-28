@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             lastname: document.getElementById('new-teacher-lastname').value,
             email: document.getElementById('new-teacher-email').value,
             password: document.getElementById('new-teacher-password').value,
-            coordinator: document.getElementById('new-teacher-coordinator').checked ? 1 : 0 // This line checks the state of the checkbox
+            coordinator: document.getElementById('new-teacher-coordinator').checked ? 1 : 0
         };        
 
         console.log(formData);

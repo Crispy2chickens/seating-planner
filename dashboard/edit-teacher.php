@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $firstname = $input['firstname'];
         $lastname = $input['lastname'];
         $password = $input['password'];
-        $coordinator = isset($input['coordinator']) ? 0 : 1; // Convert boolean to int
+        $coordinator = isset($input['coordinator']) ? 1 : 0; // Convert boolean to int
 
         require '../db_connection.php';
 

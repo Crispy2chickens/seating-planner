@@ -21,11 +21,7 @@
             <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
 
             <?php
-            session_start();
-            if (isset($_SESSION['error'])) {
-                echo "<p class='error-message'>" . $_SESSION['error'] . "</p>";
-                unset($_SESSION['error']);
-            }
+            include 'session.php'; // Update this path to your session.php file
             ?>
 
             <button type="submit" class="login-button">Log in</button>

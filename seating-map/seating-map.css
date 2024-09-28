@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+} 
+
+body{
+    background-color: #f6f6f6;
+}
+
+h1{
+    font-weight: 400;
+}
+
+.menu-bar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #071a45;
+    height: 70px;
+    padding: 0 30px 0 30px;
+}
+
+
+.left-menu-bar a {
+    text-decoration: none; /* Removes the underline */
+}
+
+.arrow-container {
+    display: flex;
+    align-items: center;
+}
+
+.arrow {
+    font-size: 24px; 
+    color: white;
+}
+
+.arrow.second {
+    margin-left: -18px; 
+    color: #071a45;
+}
+
+.nav-link{
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-link.active {
+    color: rgb(210, 210, 210); 
+}
+
+.user-name{
+    color: white;
+}
+
+
+.user-name {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+  
+.user-name .popuptext {
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    width: 150px;
+    background-color: #fff;
+    text-align: left;
+    border-radius: 3px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    /* left: 50%; 
+    transform: translateX(-50%);  */
+    right: 0;
+    bottom: -500%; 
+}
+
+.user-name .popuptext a{
+    margin: 5px 0 5px 10px;
+    color: black;
+    text-decoration: none;
+}
+  
+.user-name .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 0.05s;
+    animation: fadeIn 0.05s
+}
+
+.main-container{
+    padding: 30px;
+    height: calc(100vh - 130px);
+    display: flex;
+}
+
+.seating-map{
+    width: 80%;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgb(235, 235, 235);
+}
+
+.exam-details{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.exam-details h1{
+    font-size: 20pt;
+    color:#071a45;
+    margin: 30px 0;
+}
+
+.exam-timing{
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+}
+
+.seating-map p{
+    color:#071a45;
+}
+
+.right-page{
+    margin: 0 0 0 30px;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+}
+
+.invigilators-reg{
+    height: 50%;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgb(235, 235, 235);
+}
+
+.invigilators-reg h2{
+    font-weight: normal;
+    font-size: 13pt;
+    color:#071a45;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f6f6f6;
+}
+
+.messaging-box{
+    height: 50%;
+    margin: 30px 0 0 0;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgb(235, 235, 235);
+}
+
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+  
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
