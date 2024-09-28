@@ -296,7 +296,6 @@ td{
 
 .submit-new-exam, .submit-new-teacher {
     display: block;
-    width: 20%; 
     background-color: #071a45;
     color: white;
     padding: 10px;

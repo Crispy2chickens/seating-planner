@@ -67,8 +67,11 @@ if (!isset($_SESSION['email'])) {
     <div class="teacher-modal">
         <div class="teacher-modal-content">
             <span class="close">&times;</span>
-            <h2 class="modal-h2">Add New Teacher</h2>
+            <h2 class="modal-h2">Filler</h2>
             <form id="new-teacher-form">
+
+                <input type="hidden" id="teacher-id" name="id" value="">
+
                 <div class="add-new-containers">
                     <label for="new-teacher-email">Email Address:</label>
                     <input type="email" id="new-teacher-email" name="email" placeholder="Enter email address">
@@ -92,7 +95,7 @@ if (!isset($_SESSION['email'])) {
                     <input type="checkbox" id="new-teacher-coordinator" name="coordinator">
                 </div>
 
-                <button type="submit" class="submit-new-teacher">Submit</button>
+                <button type="submit" class="submit-new-teacher">Filler</button>
             </form>
         </div>
     </div>
