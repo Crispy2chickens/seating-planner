@@ -74,20 +74,20 @@ if (!isset($_SESSION['email'])) {
 
                 <div class="add-new-containers">
                     <label for="new-teacher-email">Email Address:</label>
-                    <input type="email" id="new-teacher-email" name="email" placeholder="Enter email address">
+                    <input type="email" id="new-teacher-email" name="email" placeholder="Enter email address" required>
                 </div>
 
                 <div class="add-new-containers">
                     <label for="new-teacher-firstname">First Name:</label>
-                    <input type="text" id="new-teacher-firstname" name="firstname" placeholder="Enter first name">
+                    <input type="text" id="new-teacher-firstname" name="firstname" placeholder="Enter first name" required>
 
                     <label for="new-teacher-lastname">Last Name:</label>
-                    <input type="text" id="new-teacher-lastname" name="lastname" placeholder="Enter last name">
+                    <input type="text" id="new-teacher-lastname" name="lastname" placeholder="Enter last name" required>
                 </div>
 
                 <div class="add-new-containers">
                     <label for="new-teacher-password">Password:</label>
-                    <input type="password" id="new-teacher-password" name="password" placeholder="Enter password">
+                    <input type="password" id="new-teacher-password" name="password" placeholder="Enter password" required>
                 </div>
 
                 <div class="add-new-containers">

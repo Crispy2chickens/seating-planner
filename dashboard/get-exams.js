@@ -38,11 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Insert rows dynamically based on the provided data
         data.forEach(row => {
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${row.title}</td>
+            tr.innerHTML = `<td>
+                                <button class="operation-buttons" onclick="setSessionAndRedirect('${row.title}', '${row.date}', '${row.starttime}', '${row.idexamsession}', '../seating-map/seating-map-1.php')">
+                                    ${row.title}
+                                </button>
+                            </td>
                             <td>${row.date}</td>
                             <td>${row.starttime}</td>
                             <td>
-                                <button class="operation-buttons" onclick="setSessionAndRedirect('${row.title}', '${row.date}', '${row.starttime}', '../seating-map/seating-map-1.php')">
+                                <button class="operation-buttons" onclick="setSessionAndRedirect('${row.title}', '${row.date}', '${row.starttime}', '${row.idexamsession}', '../seating-map/seating-map-1.php')">
                                     <img src="../img/edit-icon.png">
                                 </button>
                                 <button class="operation-buttons"><img src="../img/print-icon.png"></button>

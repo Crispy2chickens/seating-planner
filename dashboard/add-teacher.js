@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitButton.innerText = "Save Changes";
                 
                 emailFieldContainer.style.display = "none"; 
+                document.getElementById('new-teacher-email').removeAttribute('required');
+
                 currentAction = 'edit-teacher';  
                 submitButton.style.width = "22%";
                 modal.style.display = "block"; 
@@ -37,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.innerText = "Add Teacher";
 
             emailFieldContainer.style.display = "block"; 
+            document.getElementById('new-teacher-email').setAttribute('required', 'required');
 
             currentAction = 'add-teacher';  
             submitButton.style.width = "20%";

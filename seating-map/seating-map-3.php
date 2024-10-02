@@ -59,13 +59,73 @@ include '../session.php'; // Adjust the path to where session.php is located
             } else {
                 $starttime = "No start time available";
             }
+
+            if (isset($_SESSION['idexamsession'])) {
+                $idexamsession = htmlspecialchars($_SESSION['idexamsession']);
+            } else {
+                $idexamsession = "No session ID available";
+            }
             ?>
 
             <div class="exam-details">
-                <h1><?php echo $title; ?></h1>
+
+                <div class="entity-container">
+                    <h1 class="exam-title"><?php echo $title; ?></h1>
+                    <a class="edit-icon">
+                        <img src="../img/edit-icon-2.png" alt="Edit">
+                    </a>
+                </div>
+
+                <div class="edit-section">
+                    <div class="edit-section-content">
+                        <span class="close">&times;</span>
+                        <h2 class="modal-h2">Edit Title</h2>
+                        <form id="edit-title-form">
+                            <input type="hidden" id="idexamsession" value="<?php echo $_SESSION['idexamsession']; ?>">
+                            <input type="text" id="edit-title" value="<?php echo $title; ?>">
+                            <button type="submit" class="submit-changes">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="exam-timing">
-                    <p>Date: <?php echo $date; ?></p>
-                    <p class="start-time">Start Time: <?php echo $starttime; ?></p>
+                    <div class="entity-container">
+                        <p class="date-container">Date: <?php echo $date; ?></p>
+                        <a class="edit-icon">
+                            <img src="../img/edit-icon-2.png" alt="Edit">
+                        </a>
+                    </div>
+
+                    <div class="edit-section">
+                        <div class="edit-section-content">
+                            <span class="close">&times;</span>
+                            <h2 class="modal-h2">Edit Date</h2>
+                            <form id="edit-date-form">
+                                <input type="hidden" id="idexamsession" value="<?php echo $_SESSION['idexamsession']; ?>">
+                                <input type="date" id="edit-date" value="<?php echo $date; ?>">
+                                <button type="submit" class="submit-changes">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="entity-container">
+                        <p class="start-time">Start Time: <?php echo $starttime; ?></p>
+                        <a class="edit-icon">
+                            <img src="../img/edit-icon-2.png" alt="Edit">
+                        </a>
+                    </div>
+
+                    <div class="edit-section">
+                        <div class="edit-section-content">
+                            <span class="close">&times;</span>
+                            <h2 class="modal-h2">Edit Time</h2>
+                            <form id="edit-time-form">
+                                <input type="hidden" id="idexamsession" value="<?php echo $_SESSION['idexamsession']; ?>">
+                                <input type="time" id="edit-time">
+                                <button type="submit" class="submit-changes">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,6 +140,7 @@ include '../session.php'; // Adjust the path to where session.php is located
 
     <script src="../dashboard/menu.js"></script>
     <script src="../dashboard/popup.js"></script>
+    <script src="edit.js"></script>
 </body>
 
 </html>

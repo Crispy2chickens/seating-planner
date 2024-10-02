@@ -5,10 +5,11 @@ session_start();
 $data = json_decode(file_get_contents('php://input'), true);
 
 // Set the session variables for title, date, and start time
-if (isset($data['title'], $data['date'], $data['starttime'])) {
+if (isset($data['title'], $data['date'], $data['starttime'], $data['idexamsession'])) {
     $_SESSION['title'] = $data['title'];
     $_SESSION['date'] = $data['date'];
     $_SESSION['starttime'] = $data['starttime'];
+    $_SESSION['idexamsession'] = $data['idexamsession'];
     echo json_encode(['success' => true]);
 } else {
     // Check which variable was not provided for more informative error messages
@@ -21,6 +22,9 @@ if (isset($data['title'], $data['date'], $data['starttime'])) {
     }
     if (!isset($data['starttime'])) {
         $missingFields[] = 'starttime';
+    }
+    if (!isset($data['idexamsession'])) {
+        $missingFields[] = 'idexamsession';
     }
 
     echo json_encode([
