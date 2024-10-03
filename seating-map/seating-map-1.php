@@ -133,6 +133,11 @@ include '../session.php'; // Adjust the path to where session.php is located
         <div class="right-page">
             <div class="invigilators-reg">
                 <h2>Invigilators</h2>
+                <div class="invigilators-container">
+                    <div class="option-row">
+                        <button id="add-option-btn" onclick="addOption()"><img src="../img/plus.png"></button>
+                    </div>
+                </div>
             </div>
             <div class="messaging-box"></div>
         </div>
@@ -141,6 +146,7 @@ include '../session.php'; // Adjust the path to where session.php is located
     <script src="../dashboard/menu.js"></script>
     <script src="../dashboard/popup.js"></script>
     <script src="edit.js"></script>
+    <script src="add-invigilator.js"></script>
 </body>
 
 </html>
