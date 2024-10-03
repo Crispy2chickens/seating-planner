@@ -265,6 +265,14 @@ select{
     border-color: #ababab;
     border-radius: 5px;
     color: #828282;
+    flex: 1;
+}
+
+.invigilator-checkbox{
+    margin: 0 0 4px 20px;
+    width: 17px;
+    height: 17px;
+    border-color: #ababab;
 }
 
 .messaging-box{

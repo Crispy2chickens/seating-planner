@@ -57,6 +57,12 @@ function addOption() {
 
     optionRow.appendChild(newOption);
 
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'invigilator-checkbox';
+    
+    optionRow.appendChild(checkbox);
+
     const newRow = document.createElement('div');
     newRow.className = 'option-row';
 
