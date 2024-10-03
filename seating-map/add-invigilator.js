@@ -1,4 +1,3 @@
-let optionCount = 0;
 let invigilators = []; 
 let selectedInvigilators = new Set();
 
@@ -10,8 +9,6 @@ fetch('get-invigilators.php')
     .catch(error => console.error('Error fetching invigilators:', error));
 
 function addOption() {
-    optionCount++;
-
     let optionRow = document.querySelector('.option-row:last-child');
 
     if (!optionRow) {
@@ -25,22 +22,37 @@ function addOption() {
 
     const defaultOption = document.createElement('option');
     defaultOption.value = ''; 
-    defaultOption.textContent = `Select Invigilator ${optionCount}`; 
+    defaultOption.textContent = `Select Invigilator`; 
     newOption.appendChild(defaultOption);
 
     updateOptions(newOption);
 
-    // Listen for changes and update other dropdowns
     newOption.addEventListener('change', () => {
-        selectedInvigilators.clear(); // Reset before updating
+        selectedInvigilators.clear(); 
 
         document.querySelectorAll('.option').forEach(optionElement => {
             if (optionElement.value) {
-                selectedInvigilators.add(optionElement.value); // Track selected invigilators
+                selectedInvigilators.add(optionElement.value); 
             }
         });
 
-        updateAllDropdowns(); // Update all dropdowns to omit selected invigilators
+        updateAllDropdowns(); 
+
+        if (newOption.value !== '') {
+            const addButton = optionRow.querySelector('button'); 
+
+            addButton.innerHTML = '';
+
+            const minusButtonImage = document.createElement('img');
+            minusButtonImage.src = '../img/minus.png'; 
+            minusButtonImage.alt = 'Minus Option'; 
+            minusButtonImage.style.width = '20px'; 
+            minusButtonImage.style.height = '20px'; 
+
+            addButton.appendChild(minusButtonImage);
+            
+            addButton.onclick = () => deleteOptionRow(optionRow);
+        }
     });
 
     optionRow.appendChild(newOption);
@@ -71,7 +83,7 @@ function updateOptions(selectElement) {
 
     const defaultOption = document.createElement('option');
     defaultOption.value = ''; 
-    defaultOption.textContent = `Select Invigilator ${optionCount}`; 
+    defaultOption.textContent = `Select Invigilator`; 
     selectElement.appendChild(defaultOption);
 
     invigilators.forEach(invigilator => {
@@ -93,4 +105,17 @@ function updateAllDropdowns() {
     document.querySelectorAll('.option').forEach(selectElement => {
         updateOptions(selectElement);
     });
+}
+
+function deleteOptionRow(optionRow) {
+    const selectElement = optionRow.querySelector('select');
+    const selectedValue = selectElement.value;
+
+    if (selectedValue) {
+        selectedInvigilators.delete(selectedValue);
+    }
+
+    optionRow.remove();
+
+    updateAllDropdowns();
 }
