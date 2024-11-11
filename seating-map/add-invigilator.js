@@ -67,6 +67,7 @@ function addOption() {
     newRow.className = 'option-row';
 
     const addButton = document.createElement('button');
+    addButton.id = "add-option-btn";
     const buttonImage = document.createElement('img');
     buttonImage.src = '../img/plus.png'; 
     buttonImage.alt = 'Add Option'; 
