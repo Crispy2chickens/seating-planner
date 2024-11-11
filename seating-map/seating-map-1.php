@@ -150,6 +150,7 @@ include '../session.php'; // Adjust the path to where session.php is located
     <script src="../dashboard/popup.js"></script>
     <script src="edit.js"></script>
     <script src="add-invigilator.js"></script>
+    <script src="save-invigilator.js"></script>
 </body>
 
 </html>
