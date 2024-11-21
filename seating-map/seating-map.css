@@ -268,28 +268,14 @@ select{
     flex: 1;
 }
 
-.invigilator-checkbox{
-    margin: 0 0 4px 20px;
-    width: 17px;
-    height: 17px;
-    border-color: #ababab;
-}
-
-#save-invigilators{
-    margin: 0 20px;
-    background-color: #071a45;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.outer-invigilators-container{
-    height: 80%;
+.user-container{
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
+    padding: 5px 1vw;
+}
+
+.user-container:first-child{
+    padding: 10px 1vw 5px 1vw;
 }
 
 .messaging-box{

@@ -19,16 +19,17 @@ fetch('get-invigilators.php')
                 const userInfo = document.createElement('p');
                 userInfo.textContent = `${user.firstname} ${user.lastname}`;
                 
-                const attendanceLabel = document.createElement('label');
-                attendanceLabel.textContent = 'Attendance: ';
-                
                 const attendanceCheckbox = document.createElement('input');
                 attendanceCheckbox.type = 'checkbox';
                 attendanceCheckbox.checked = (user.attendance === 1); // Default to "Present" if attendance is marked
 
+                attendanceCheckbox.addEventListener('change', () => {
+                    const attendanceStatus = attendanceCheckbox.checked ? 1 : 0;
+                    updateAttendance(user.staffinvigilationid, attendanceStatus); // Use user.staffinvigilationid here
+                });
+
                 // Create a container for the user and append it to the user list
                 userDiv.appendChild(userInfo);
-                userDiv.appendChild(attendanceLabel);
                 userDiv.appendChild(attendanceCheckbox);
                 userListDiv.appendChild(userDiv);
             });
@@ -37,3 +38,25 @@ fetch('get-invigilators.php')
         }
     })
     .catch(error => console.error("Fetch error:", error));
+
+function updateAttendance(staffinvigilationid, attendanceStatus) {
+    fetch('update-attendance.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            staffinvigilationid: staffinvigilationid,
+            attendance: attendanceStatus
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            console.log("Attendance updated successfully");
+        } else {
+            console.error("Failed to update attendance", data.message);
+        }
+    })
+    .catch(error => console.error("Error updating attendance:", error));
+}
