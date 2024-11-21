@@ -132,10 +132,29 @@ include '../session.php'; // Adjust the path to where session.php is located
 
         <div class="right-page">
             <div class="invigilators-reg">
-                <h2>Invigilators</h2>
+                <h2 class="invigilators-h2">Invigilators</h2>
                 <div class="invigilators-container">
                     <div id="user-list"></div>
+
                     <button id="add-invigilators" onclick="addInvigilators()">Add Invigilators</button>
+
+                    <div id="add-invigilators-modal" class="modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h2 class="modal-h2">Add Invigilators</h2>
+
+                            <form id="add-invigilators-form">
+                                <label for="idusers">Invigilator:</label>
+                                <select id="idusers">
+                                    <!-- Options for invigilators will be dynamically populated -->
+                                </select>
+                                <br>
+                                <input type="hidden" id="idexamsession" value="<?php echo $_SESSION['idexamsession']; ?>"> <!-- Set exam session ID dynamically -->
+                                <button type="submit" class="submit-changes">Add Invigilator</button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -147,6 +166,7 @@ include '../session.php'; // Adjust the path to where session.php is located
     <script src="../dashboard/popup.js"></script>
     <script src="edit.js"></script>
     <script src="get-invigilators.js"></script>
+    <script src="add-invigilators.js"></script>
 </body>
 
 </html>

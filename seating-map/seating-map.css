@@ -147,7 +147,7 @@ h1{
     cursor: pointer;
 }
 
-.edit-section {
+.modal, .edit-section {
     display: none; 
     position: fixed;
     z-index: 1;
@@ -158,13 +158,17 @@ h1{
     background-color: rgba(0, 0, 0, 0.4); 
 }
 
-.edit-section-content {
+.modal-content, .edit-section-content {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 30px;
     border: none;
     width: 80%;
     max-width: 500px;
+}
+
+.modal-content{
+    width: 20%;
 }
 
 .close {
@@ -185,8 +189,12 @@ h1{
     margin: 0 0 40px 0;
 }
 
-.edit-section label, .edit-section input, .edit-section button{
+.edit-section label, .edit-section input, .edit-section button, #add-invigilators-form label{
     font-size: 18px;
+}
+
+#add-invigilators-form button, #add-invigilators-form select{
+    font-size: 16px;
 }
 
 .edit-section input{
@@ -225,7 +233,7 @@ h1{
     box-shadow: 0px 0px 10px rgb(235, 235, 235);
 }
 
-.invigilators-reg h2{
+.invigilators-h2{
     font-weight: normal;
     font-size: 13pt;
     color:#071a45;
@@ -255,10 +263,15 @@ h1{
     margin: 0 1vw;
     background-color: #071a45;
     color: white;
-    padding: 3px 8px;
+    padding: 5px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
+    font-size: 14px;
+}
+
+#idusers{
+    margin: 0 0 20px 0;
 }
 
 .messaging-box{
