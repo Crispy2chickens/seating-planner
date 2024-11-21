@@ -1,10 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let examsData = [];  // Store the fetched exam data here
+    let fetchUrl = ''; // Initialize the URL variable
+
+    // Check if the user is a coordinator or not
+    if (isCoordinator === 1) {
+        fetchUrl = 'get-exams.php';  // Coordinator fetches exams data
+    } else {
+        fetchUrl = 'get-invigilator-exams.php';  // Non-coordinator fetches invigilator exams data
+    }
 
     // Fetch exam data and render table
-    fetch('get-exams.php')
+    fetch(fetchUrl)
     .then(response => response.json())
     .then(data => {
+        console.log(data);
         examsData = data;  // Store data for later use in filtering
 
         // Sort by date and start time initially

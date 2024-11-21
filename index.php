@@ -18,7 +18,6 @@
             <input type="email" id="email" name="email" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-            <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
 
             <?php
             include 'session.php'; // Update this path to your session.php file

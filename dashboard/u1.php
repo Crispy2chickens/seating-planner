@@ -6,6 +6,9 @@ if (!isset($_SESSION['email'])) {
     header("Location: index.html");
     exit();
 }
+
+$isCoordinator = $_SESSION['coordinator'];
+$idUser = $_SESSION['idusers'];
 ?>
 
 <!DOCTYPE html>
@@ -60,6 +63,11 @@ if (!isset($_SESSION['email'])) {
     </div>
 
     <script src="popup.js"></script>
+    <script>
+        var isCoordinator = <?php echo json_encode($isCoordinator); ?>;
+        var idUser = <?php echo json_encode($idUser); ?>;
+    </script>
+    <script src="get-exams.js"></script>
 </body>
 
 </html>

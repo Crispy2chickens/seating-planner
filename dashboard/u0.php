@@ -6,6 +6,9 @@ if (!isset($_SESSION['email'])) {
     header("Location: index.html");
     exit();
 }
+
+$isCoordinator = $_SESSION['coordinator'];
+
 ?>
 
 <!DOCTYPE html>
@@ -95,6 +98,10 @@ if (!isset($_SESSION['email'])) {
     <script src="menu.js"></script>
     <script src="popup.js"></script>
     <script src="set-session.js"></script>
+    <script>
+        var isCoordinator = <?php echo json_encode($isCoordinator); ?>;
+        console.log(isCoordinator); // Verify this value in the browser console
+    </script>
     <script src="get-exams.js"></script>
     <script src="archive.js"></script>
     <script src="add-exam.js"></script>

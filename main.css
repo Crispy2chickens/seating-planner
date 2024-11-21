@@ -81,11 +81,6 @@ a:hover {
     text-align: left;
 }
 
-.forgot-password{
-    margin: -20px 0 50px;
-    font-size: 15px;
-}
-
-.change-password-button {
-    margin-top: 70px; 
+.login-button{
+    margin: 50px 0 0 0;
 }

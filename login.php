@@ -22,6 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['lastname'] = $user['lastname'];
         $_SESSION['coordinator'] = $user['coordinator'];
 
+        $_SESSION['idusers'] = $user['idusers'];
+
         if ($user['coordinator'] == 1) {
             header("Location: dashboard/u0.php");
         } else {
