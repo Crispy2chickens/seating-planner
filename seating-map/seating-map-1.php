@@ -133,7 +133,10 @@ include '../session.php'; // Adjust the path to where session.php is located
         <div class="right-page">
             <div class="invigilators-reg">
                 <h2>Invigilators</h2>
-                <div id="user-list"></div>
+                <div class="invigilators-container">
+                    <div id="user-list"></div>
+                    <button id="add-invigilators" onclick="addInvigilators()">Add Invigilators</button>
+                </div>
             </div>
 
             <div class="messaging-box"></div>
