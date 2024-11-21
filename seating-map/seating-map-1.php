@@ -136,7 +136,7 @@ include '../session.php'; // Adjust the path to where session.php is located
                 <div class="invigilators-container">
                     <div id="user-list"></div>
 
-                    <button id="add-invigilators" onclick="addInvigilators()">Add Invigilators</button>
+                    <button id="add-invigilators">Add Invigilators</button>
 
                     <div id="add-invigilators-modal" class="modal">
                         <div class="modal-content">
@@ -150,6 +150,7 @@ include '../session.php'; // Adjust the path to where session.php is located
                                 </select>
                                 <br>
                                 <input type="hidden" id="idexamsession" value="<?php echo $_SESSION['idexamsession']; ?>"> <!-- Set exam session ID dynamically -->
+                                <input type="hidden" id="idvenue" value=1>
                                 <button type="submit" class="submit-changes">Add Invigilator</button>
                             </form>
                         </div>

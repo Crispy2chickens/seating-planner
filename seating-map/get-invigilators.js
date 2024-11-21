@@ -1,4 +1,7 @@
-fetch('get-invigilators.php')
+// Get the value of idvenue (assuming it's already set in the page, such as from a hidden input)
+var idvenue = document.getElementById('idvenue').value;
+
+fetch(`get-invigilators.php?idvenue=${idvenue}`)
     .then(response => {
         if (!response.ok) throw new Error("Network response was not ok");
         return response.text(); // Use text() to check raw output first

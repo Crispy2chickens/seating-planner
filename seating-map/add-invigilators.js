@@ -5,12 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
     var invigilatorSelect = document.getElementById('idusers');
     var form = document.getElementById('add-invigilators-form');
 
+    var idvenue = document.getElementById('idvenue').value;
+    
     // When the "Add Invigilators" button is clicked, show the modal
     addButton.addEventListener('click', function() {
         modal.style.display = 'block';
         
         // Fetch invigilators list and populate the select dropdown
-        fetch('get-invigilators-list.php') // This PHP file should return the list of invigilators
+        fetch(`get-invigilators-list.php?idvenue=${idvenue}`) // This PHP file should return the list of invigilators
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
@@ -46,13 +48,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const idusers = document.getElementById('idusers').value;
         const idexamsession = document.getElementById('idexamsession').value;
+        const idvenue = document.getElementById('idvenue').value;
 
         fetch('add-invigilator.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ idusers: idusers, idexamsession: idexamsession })
+            body: JSON.stringify({ idusers: idusers, idexamsession: idexamsession, idvenue: idvenue })
         })
         .then(response => response.json())
         .then(data => {

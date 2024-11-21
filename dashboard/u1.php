@@ -35,6 +35,28 @@ if (!isset($_SESSION['email'])) {
         </div>
 
         <input class="search-bar" type="text" placeholder="Search Upcoming Invigilations">
+
+        <div class="table-container">
+            <table id="data-table">
+                <colgroup>
+                    <col class="title">
+                    <col class="date">
+                    <col class="starttime">
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr class="table-height-exception">
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script src="popup.js"></script>
