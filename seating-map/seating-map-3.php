@@ -1,5 +1,7 @@
 <?php
 include '../session.php'; // Adjust the path to where session.php is located
+
+$isCoordinator = $_SESSION['coordinator'];
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +16,7 @@ include '../session.php'; // Adjust the path to where session.php is located
 
 <body>
     <div class="menu-bar">
-        <div class="left-menu-bar">
+        <div class="left-menu-bar">x
             <a href="../dashboard/u0.php" class="arrow-container">
                 <span class="arrow">&#x25C0;</span>
                 <span class="arrow second">&#x25C0;</span>
@@ -136,7 +138,9 @@ include '../session.php'; // Adjust the path to where session.php is located
                 <div class="invigilators-container">
                     <div id="user-list"></div>
 
-                    <button id="add-invigilators">Add Invigilators</button>
+                    <?php if ($isCoordinator == 1): ?>
+                        <button id="add-invigilators">Add Invigilators</button>
+                    <?php endif; ?>
 
                     <div id="add-invigilators-modal" class="modal">
                         <div class="modal-content">

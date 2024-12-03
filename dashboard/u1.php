@@ -63,6 +63,7 @@ $idUser = $_SESSION['idusers'];
     </div>
 
     <script src="popup.js"></script>
+    <script src="set-session.js"></script>
     <script>
         var isCoordinator = <?php echo json_encode($isCoordinator); ?>;
         var idUser = <?php echo json_encode($idUser); ?>;
