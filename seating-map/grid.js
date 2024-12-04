@@ -8,14 +8,13 @@ for (let col = 0; col < columns; col++) {
         const seatNumber = row * columns + col + 1; // Calculate the seat number
         const seat = document.createElement('div');
         seat.className = 'seat';
-        
+
         seat.draggable = true;
-        seat.id = `seat${seatNumber}`;
+        seat.id = `${seatNumber}`;
         seat.textContent = `${seatNumber}`;
 
         // Fetch student data for each seat number from the backend
         fetchStudentData(seat, seatNumber);
-
         map.appendChild(seat);
 
         // Add drag event listeners to each seat after they are added to the DOM
@@ -48,7 +47,7 @@ async function fetchStudentData(seat, seatNumber) {
 
 function handleDragStart(event) {
     event.target.classList.add('dragging');
-    event.dataTransfer.setData('text/plain', event.target.id); // Pass the seat's ID
+    event.dataTransfer.setData('text/plain', event.target.id); 
 }
 
 function handleDragEnd(event) {
@@ -59,7 +58,7 @@ function handleDragOver(event) {
     event.preventDefault(); // Allow dropping
 }
 
-function handleDrop(event) {
+async function handleDrop(event) {
     event.preventDefault();
     const draggedSeatId = event.dataTransfer.getData('text/plain');
     const draggedSeat = document.getElementById(draggedSeatId);
@@ -67,21 +66,21 @@ function handleDrop(event) {
 
     // Swap positions only if the target is a seat
     if (targetSeat.classList.contains('seat')) {
-        // Clone the seats to swap their content and position
-        const draggedClone = draggedSeat.cloneNode(true);
-        const targetClone = targetSeat.cloneNode(true);
-
-        // Remove the 'dragging' class from the clones
-        draggedClone.classList.remove('dragging');
-        targetClone.classList.remove('dragging');
-
-        // Replace the original seats
-        map.replaceChild(draggedClone, targetSeat);
-        map.replaceChild(targetClone, draggedSeat);
-
-        // Re-add drag-and-drop listeners to the clones
-        addDragDropListeners(draggedClone);
-        addDragDropListeners(targetClone);
+        // Swap seat numbers
+        const draggedSeatId = draggedSeat.id;  
+        const targetSeatId = targetSeat.id;    
+    
+        // Swap their IDs
+        [draggedSeat.id, targetSeat.id] = [targetSeat.id, draggedSeat.id];
+    
+        // Swap their textContent (if you want to show the updated seat number visually)
+        const draggedSeatNumber = draggedSeat.textContent;
+        const targetSeatNumber = targetSeat.textContent;
+        [draggedSeat.textContent, targetSeat.textContent] = [targetSeatNumber, draggedSeatNumber];
+    
+        // Send the updated seat positions (using their IDs) to the backend
+        // console.log('Sending seat IDs:', draggedSeatId, targetSeatId);
+        await saveSeatPositions(draggedSeatId, targetSeatId);
     }
 }
 
@@ -89,4 +88,24 @@ function handleDrop(event) {
 function addDragDropListeners(seat) {
     seat.addEventListener('dragstart', handleDragStart);
     seat.addEventListener('dragend', handleDragEnd);
+}
+
+async function saveSeatPositions(seat1Id, seat2Id) {
+    try {
+        const response = await fetch('save-seat-positions.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                seat1: seat1Id,  // Send the seat IDs to the backend
+                seat2: seat2Id
+            })
+        });
+
+        const resultText = await response.text(); // Get the raw text response
+        
+    } catch (error) {
+        console.error('Error saving seat positions:', error);
+    }
 }

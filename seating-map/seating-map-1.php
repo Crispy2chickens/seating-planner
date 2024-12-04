@@ -2,6 +2,7 @@
 include '../session.php'; // Adjust the path to where session.php is located
 
 $isCoordinator = $_SESSION['coordinator'];
+$_SESSION['idvenue'] = '1';
 ?>
 
 <!DOCTYPE html>
@@ -158,7 +159,7 @@ $isCoordinator = $_SESSION['coordinator'];
                                 </select>
                                 <br>
                                 <input type="hidden" id="idexamsession" value="<?php echo $_SESSION['idexamsession']; ?>"> <!-- Set exam session ID dynamically -->
-                                <input type="hidden" id="idvenue" value=1>
+                                <input type="hidden" id="idvenue" value="<?php echo $_SESSION['idvenue']; ?>">
                                 <button type="submit" class="submit-changes">Add Invigilator</button>
                             </form>
                         </div>

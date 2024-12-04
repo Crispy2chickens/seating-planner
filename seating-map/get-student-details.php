@@ -2,40 +2,36 @@
 include '../db_connection.php';
 include '../session.php';
 
-// Get the seat number from the request
+$idvenue = isset($_SESSION['idvenue']) ? $_SESSION['idvenue'] : null;
+$idexamsession = isset($_SESSION['idexamsession']) ? $_SESSION['idexamsession'] : null;
 $seatNumber = isset($_GET['seatNumber']) ? (int) $_GET['seatNumber'] : 0;
 
-// Query to fetch student details by seat number
 $query = "
-    SELECT students.firstname, students.lastname 
-    FROM studentexams 
-    INNER JOIN students ON studentexams.idstudents = students.idstudents 
-    WHERE studentexams.seatno = ?";
+SELECT students.firstname, students.lastname
+FROM studentexams
+INNER JOIN students ON studentexams.idstudents = students.idstudents
+WHERE studentexams.seatno = ?
+AND studentexams.idexamsession = ?
+AND studentexams.idvenue = ?
+";
 
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $seatNumber); // "i" means integer
+$stmt->bind_param("iii", $seatNumber, $idexamsession, $idvenue);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Check if a result was found
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $response = [
-        'firstname' => $row['firstname'],
-        'lastname' => $row['lastname']
-    ];
+    $response['firstname'] = $row['firstname'];
+    $response['lastname'] = $row['lastname'];
 } else {
-    // If no student is found, return a default message
-    $response = [
-        'firstname' => 'Unavailable',
-        'lastname' => ''
-    ];
+    $response['firstname'] = 'Unavailable';
+    $response['lastname'] = '';
 }
 
-// Close connection
+header('Content-Type: application/json');
+
+echo json_encode($response);
+
 $stmt->close();
 $conn->close();
-
-// Return the response as JSON
-header('Content-Type: application/json');
-echo json_encode($response);

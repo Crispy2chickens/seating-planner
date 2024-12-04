@@ -7,10 +7,10 @@ fetch(`get-invigilators.php?idvenue=${idvenue}`)
         return response.text(); // Use text() to check raw output first
     })
     .then(text => {
-        console.log("Raw response text:", text); // Check raw output in console
+        // console.log("Raw response text:", text); 
         const data = text ? JSON.parse(text) : {}; // Parse if not empty
         if (data.status === 'success') {
-            console.log("Data received:", data.data);
+            // console.log("Data received:", data.data);
             const userListDiv = document.getElementById('user-list');
             userListDiv.innerHTML = ''; // Clear any previous content
 
