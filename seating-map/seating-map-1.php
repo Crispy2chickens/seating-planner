@@ -146,7 +146,6 @@ $isCoordinator = $_SESSION['coordinator'];
                         <button id="add-invigilators">Add Invigilators</button>
                     <?php endif; ?>
 
-
                     <div id="add-invigilators-modal" class="modal">
                         <div class="modal-content">
                             <span class="close">&times;</span>
