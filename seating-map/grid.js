@@ -1,5 +1,7 @@
 const map = document.querySelector('#map');
 
+const isCoordinator = JSON.parse(map.dataset.isCoordinator);
+
 const className = map.className;
 
 let rows, columns; 
@@ -36,9 +38,18 @@ for (let col = 0; col < columns; col++) {
     }
 }
 
-// Add event listeners for the map (drag over and drop)
-map.addEventListener('dragover', handleDragOver);
-map.addEventListener('drop', handleDrop);
+// Assuming isCoordinator is passed from the PHP as described before
+if (isCoordinator) {
+    // Add event listeners for the map (drag over and drop)
+    map.addEventListener('dragover', handleDragOver);
+    map.addEventListener('drop', handleDrop);
+
+    console.log('Drag and drop enabled for coordinators.');
+} else {
+    console.log('Drag and drop disabled for non-coordinators.');
+}
+
+// Other functions remain unchanged
 
 async function fetchStudentData(seat, seatNumber) {
     try {
@@ -92,12 +103,10 @@ async function handleDrop(event) {
         [draggedSeat.textContent, targetSeat.textContent] = [targetSeatNumber, draggedSeatNumber];
     
         // Send the updated seat positions (using their IDs) to the backend
-        // console.log('Sending seat IDs:', draggedSeatId, targetSeatId);
         await saveSeatPositions(draggedSeatId, targetSeatId);
     }
 }
 
-// Function to add drag-and-drop listeners to dynamically created nodes
 function addDragDropListeners(seat) {
     seat.addEventListener('dragstart', handleDragStart);
     seat.addEventListener('dragend', handleDragEnd);
@@ -117,7 +126,6 @@ async function saveSeatPositions(seat1Id, seat2Id) {
         });
 
         const resultText = await response.text(); // Get the raw text response
-        
     } catch (error) {
         console.error('Error saving seat positions:', error);
     }
