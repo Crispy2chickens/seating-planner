@@ -1,6 +1,5 @@
 const map = document.querySelector('#map');
-
-const isCoordinator = JSON.parse(map.dataset.isCoordinator);
+const isCoordinator = JSON.parse(map.dataset.isCoordinator); // Get the value from data-is-coordinator attribute
 
 const className = map.className;
 
@@ -17,7 +16,7 @@ if (className === 'map-1') {
     columns = 1; 
 }
 
-// Dynamically create seats
+// Dynamically create seats with plus buttons
 for (let col = 0; col < columns; col++) {
     for (let row = 0; row < rows; row++) {
         const seatNumber = row * columns + col + 1; // Calculate the seat number
@@ -28,17 +27,50 @@ for (let col = 0; col < columns; col++) {
         seat.id = `${seatNumber}`;
         seat.textContent = `${seatNumber}`;
 
-        // Fetch student data for each seat number from the backend
+        // Create Plus Button
+        const plusButton = document.createElement('button');
+        plusButton.className = 'plus-btn';
+        plusButton.textContent = '+';
+        // plusButton.addEventListener('click', (e) => showModal(e, seatNumber));
+        
+        seat.appendChild(plusButton);
+
         fetchStudentData(seat, seatNumber);
         map.appendChild(seat);
 
-        // Add drag event listeners to each seat after they are added to the DOM
         seat.addEventListener('dragstart', handleDragStart);
         seat.addEventListener('dragend', handleDragEnd);
     }
 }
 
-// Assuming isCoordinator is passed from the PHP as described before
+// // Show Modal
+// function showModal(event, seatNumber) {
+//     event.stopPropagation();
+//     const modal = document.getElementById('seatModal');
+    
+//     const modalContent = modal.querySelector('p');
+//     modalContent.textContent = `Seat #${seatNumber} Information`; // Customize modal content
+
+//     const rect = event.target.getBoundingClientRect();
+//     modal.style.top = `${rect.bottom + window.scrollY}px`;
+//     modal.style.left = `${rect.left + window.scrollX}px`;
+//     modal.classList.remove('hidden');
+// }
+
+// // Hide Modal
+// document.querySelector('.close-btn').addEventListener('click', () => {
+//     document.getElementById('seatModal').classList.add('hidden');
+// });
+
+// // Hide Modal on outside click
+// document.addEventListener('click', (event) => {
+//     const modal = document.getElementById('seatModal');
+//     if (!modal.contains(event.target)) {
+//         modal.classList.add('hidden');
+//     }
+// })
+
+// Handle drag-and-drop events based on the coordinator status
 if (isCoordinator) {
     // Add event listeners for the map (drag over and drop)
     map.addEventListener('dragover', handleDragOver);
@@ -50,7 +82,6 @@ if (isCoordinator) {
 }
 
 // Other functions remain unchanged
-
 async function fetchStudentData(seat, seatNumber) {
     try {
         // Fetch data from the PHP script

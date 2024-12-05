@@ -135,6 +135,13 @@ $_SESSION['idvenue'] = '1';
             <div class="map-1" id="map" data-is-coordinator="<?php echo htmlspecialchars(json_encode($_SESSION['coordinator'])); ?>">
                 <!-- Seats Here -->
             </div>
+
+            <div id="seatModal" class="seat-modal hidden">
+                <div class="seat-modal-content">
+                    <p id="seatDetails">Seat Details</p>
+                    <button class="close-btn">Close</button>
+                </div>
+            </div>
         </div>
 
         <div class=" right-page">
