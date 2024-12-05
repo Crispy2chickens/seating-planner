@@ -136,12 +136,6 @@ $_SESSION['idvenue'] = '1';
                 <!-- Seats Here -->
             </div>
 
-            <div id="seatModal" class="seat-modal hidden">
-                <div class="seat-modal-content">
-                    <p id="seatDetails">Seat Details</p>
-                    <button class="close-btn">Close</button>
-                </div>
-            </div>
         </div>
 
         <div class=" right-page">

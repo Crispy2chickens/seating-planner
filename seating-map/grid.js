@@ -27,48 +27,23 @@ for (let col = 0; col < columns; col++) {
         seat.id = `${seatNumber}`;
         seat.textContent = `${seatNumber}`;
 
+        
         // Create Plus Button
         const plusButton = document.createElement('button');
         plusButton.className = 'plus-btn';
         plusButton.textContent = '+';
-        // plusButton.addEventListener('click', (e) => showModal(e, seatNumber));
         
-        seat.appendChild(plusButton);
+        // Ensure data is fetched before appending button
+        fetchStudentData(seat, seatNumber).then(() => {
+            seat.appendChild(plusButton);
+        });
 
-        fetchStudentData(seat, seatNumber);
         map.appendChild(seat);
 
         seat.addEventListener('dragstart', handleDragStart);
         seat.addEventListener('dragend', handleDragEnd);
     }
 }
-
-// // Show Modal
-// function showModal(event, seatNumber) {
-//     event.stopPropagation();
-//     const modal = document.getElementById('seatModal');
-    
-//     const modalContent = modal.querySelector('p');
-//     modalContent.textContent = `Seat #${seatNumber} Information`; // Customize modal content
-
-//     const rect = event.target.getBoundingClientRect();
-//     modal.style.top = `${rect.bottom + window.scrollY}px`;
-//     modal.style.left = `${rect.left + window.scrollX}px`;
-//     modal.classList.remove('hidden');
-// }
-
-// // Hide Modal
-// document.querySelector('.close-btn').addEventListener('click', () => {
-//     document.getElementById('seatModal').classList.add('hidden');
-// });
-
-// // Hide Modal on outside click
-// document.addEventListener('click', (event) => {
-//     const modal = document.getElementById('seatModal');
-//     if (!modal.contains(event.target)) {
-//         modal.classList.add('hidden');
-//     }
-// })
 
 // Handle drag-and-drop events based on the coordinator status
 if (isCoordinator) {
@@ -129,8 +104,9 @@ async function handleDrop(event) {
         [draggedSeat.id, targetSeat.id] = [targetSeat.id, draggedSeat.id];
     
         // Swap their textContent (if you want to show the updated seat number visually)
-        const draggedSeatNumber = draggedSeat.textContent;
-        const targetSeatNumber = targetSeat.textContent;
+        const draggedSeatNumber = draggedSeat.textContent.slice(0, -1); 
+        const targetSeatNumber = targetSeat.textContent.slice(0, -1);  
+
         [draggedSeat.textContent, targetSeat.textContent] = [targetSeatNumber, draggedSeatNumber];
     
         // Send the updated seat positions (using their IDs) to the backend
