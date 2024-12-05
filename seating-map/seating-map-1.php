@@ -132,12 +132,12 @@ $_SESSION['idvenue'] = '1';
                 </div>
             </div>
 
-            <div class="map">
+            <div class="map-1" id="map" data-is-coordinator="<?php echo htmlspecialchars(json_encode($_SESSION['coordinator'])); ?>">
                 <!-- Seats Here -->
             </div>
         </div>
 
-        <div class="right-page">
+        <div class=" right-page">
             <div class="invigilators-reg">
                 <h2 class="invigilators-h2">Invigilators</h2>
                 <div class="invigilators-container">
@@ -176,7 +176,9 @@ $_SESSION['idvenue'] = '1';
     <script src="../dashboard/popup.js"></script>
     <script src="edit.js"></script>
     <script src="get-invigilators.js"></script>
-    <script src="add-invigilators.js"></script>
+    <?php if ($isCoordinator == 1): ?>
+        <script src="add-invigilators.js"></script>
+    <?php endif; ?>
     <script src="grid.js"></script>
 </body>
 

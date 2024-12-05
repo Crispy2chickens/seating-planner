@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(fetchUrl)
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         examsData = data;  // Store data for later use in filtering
 
         // Sort by date and start time initially

@@ -1,6 +1,19 @@
-const map = document.querySelector('.map');
-const rows = 13; // 13 rows
-const columns = 8; // 8 columns
+const map = document.querySelector('#map');
+
+const className = map.className;
+
+let rows, columns; 
+
+if (className === 'map-1') {
+    rows = 13; 
+    columns = 8;
+} else if (className === 'map-2') {
+    rows = 7; 
+    columns = 3; 
+} else if (className === 'map-3') {
+    rows = 5; 
+    columns = 1; 
+}
 
 // Dynamically create seats
 for (let col = 0; col < columns; col++) {

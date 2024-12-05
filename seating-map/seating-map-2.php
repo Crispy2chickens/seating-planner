@@ -2,6 +2,7 @@
 include '../session.php'; // Adjust the path to where session.php is located
 
 $isCoordinator = $_SESSION['coordinator'];
+$_SESSION['idvenue'] = '2';
 ?>
 
 <!DOCTYPE html>
@@ -130,6 +131,10 @@ $isCoordinator = $_SESSION['coordinator'];
                     </div>
                 </div>
             </div>
+
+            <div class="map-2" id="map" data-is-coordinator="<?php echo htmlspecialchars(json_encode($_SESSION['coordinator'])); ?>">
+                <!-- Seats Here -->
+            </div>
         </div>
 
         <div class="right-page">
@@ -171,7 +176,10 @@ $isCoordinator = $_SESSION['coordinator'];
     <script src="../dashboard/popup.js"></script>
     <script src="edit.js"></script>
     <script src="get-invigilators.js"></script>
-    <script src="add-invigilators.js"></script>
+    <?php if ($isCoordinator == 1): ?>
+        <script src="add-invigilators.js"></script>
+    <?php endif; ?>
+    <script src="grid.js"></script>
 </body>
 
 </html>
