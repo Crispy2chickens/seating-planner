@@ -59,6 +59,17 @@ function createSeat(row, col) {
     seat.addEventListener('dragend', handleDragEnd);
 }
 
+// Handle drag-and-drop events based on the coordinator status
+if (isCoordinator) {
+    // Add event listeners for the map (drag over and drop)
+    map.addEventListener('dragover', handleDragOver);
+    map.addEventListener('drop', handleDrop);
+
+    console.log('Drag and drop enabled for coordinators.');
+} else {
+    console.log('Drag and drop disabled for non-coordinators.');
+}
+
 // Function to fetch student data and update seat content
 async function fetchStudentData(seat, seatNumber) {
     try {
@@ -111,18 +122,18 @@ async function handleDrop(event) {
 
     // Swap positions only if the target is a seat
     if (targetSeat.classList.contains('seat')) {
-        // Swap seat numbers
+        // Swap seat IDs
         const draggedSeatId = draggedSeat.id;  
         const targetSeatId = targetSeat.id;    
     
         // Swap their IDs
         [draggedSeat.id, targetSeat.id] = [targetSeat.id, draggedSeat.id];
     
-        // Swap their textContent (if you want to show the updated seat number visually)
-        const draggedSeatNumber = draggedSeat.textContent.slice(0, -1); 
-        const targetSeatNumber = targetSeat.textContent.slice(0, -1);  
+        // Swap their innerHTML (preserving the HTML structure including spans and other elements)
+        const draggedSeatHTML = draggedSeat.innerHTML;
+        const targetSeatHTML = targetSeat.innerHTML;
 
-        [draggedSeat.textContent, targetSeat.textContent] = [targetSeatNumber, draggedSeatNumber];
+        [draggedSeat.innerHTML, targetSeat.innerHTML] = [targetSeatHTML, draggedSeatHTML];
     
         // Send the updated seat positions (using their IDs) to the backend
         await saveSeatPositions(draggedSeatId, targetSeatId);
