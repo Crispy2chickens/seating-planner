@@ -67,18 +67,28 @@ async function fetchStudentData(seat, seatNumber) {
         const data = await response.json();
 
         // Update the seat text with student info, after fetching
-        if (data.firstname && data.lastname) {
-            seat.textContent = `${data.firstname} ${data.lastname}`;
+        if (data.firstname && data.lastname && data.candidateno) {
+            let additionalInfo = '';
+            if (data.wordprocessor !== 0) {
+                additionalInfo += `<span style="color: red; font-size: 0.7em;">WP</span> <br>`;
+            }
+            if (data.extratime !== 0) {
+                additionalInfo += `<span style="color: red; font-size: 0.7em;">ET: ${data.extratime}</span> <br>`;
+            }
+            if (data.restbreak !== 0) {
+                additionalInfo += `<span style="color: red; font-size: 0.7em;">Rest Break</span> <br>`;
+            }
+
+            seat.innerHTML = `<div>${data.firstname} ${data.lastname} <br><span style="font-size: 0.8em;">${data.candidateno}</span><br>${additionalInfo}</div>`;
+
         } else {
             // Correctly show row and column values
             seat.textContent = `${seatNumber}`;
         }
     } catch (error) {
-        console.error('Error fetching student data:', error);
         seat.textContent = `${seatNumber}`;
     }
 }
-
 
 function handleDragStart(event) {
     event.target.classList.add('dragging');

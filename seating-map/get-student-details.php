@@ -7,7 +7,7 @@ $idexamsession = isset($_SESSION['idexamsession']) ? $_SESSION['idexamsession'] 
 $seatNumber = isset($_GET['seatNumber']) ? (int) $_GET['seatNumber'] : 0;
 
 $query = "
-SELECT students.firstname, students.lastname
+SELECT students.firstname, students.lastname, students.candidateno, students.wordprocessor, students.extratime, students.restbreak
 FROM studentexams
 INNER JOIN students ON studentexams.idstudents = students.idstudents
 WHERE studentexams.seatno = ?
@@ -24,9 +24,10 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $response['firstname'] = $row['firstname'];
     $response['lastname'] = $row['lastname'];
-} else {
-    $response['firstname'] = 'Unavailable';
-    $response['lastname'] = '';
+    $response['candidateno'] = $row['candidateno'];
+    $response['wordprocessor'] = $row['wordprocessor'];
+    $response['extratime'] = $row['extratime'];
+    $response['restbreak'] = $row['restbreak'];
 }
 
 header('Content-Type: application/json');

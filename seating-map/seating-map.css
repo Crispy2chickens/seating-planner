@@ -313,6 +313,7 @@ h1{
     user-select: none;
     text-align: center;
     position: relative;
+    font-size: 0.8em;
 }
 
 .seat:active {
