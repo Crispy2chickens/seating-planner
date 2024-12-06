@@ -333,8 +333,6 @@ h1{
 
 .plus-btn {
     position: absolute;
-    top: calc(10% * -1);
-    right: calc(10% * -1);
     background-color: #c1c1c1;
     color: black;
     border: 1px solid #bbb;
@@ -345,6 +343,21 @@ h1{
     cursor: pointer;
     z-index: 10;
     display: none;
+}
+
+.map-1 .plus-btn{
+    top: calc(10% * -1);
+    right: calc(10% * -1);
+}
+
+.map-2 .plus-btn{
+    top: calc(5% * -1);
+    right: calc(7% * -1);
+}
+
+.map-3 .plus-btn{
+    top: calc(2% * -1);
+    right: calc(5% * -1);
 }
 
 .seat:hover .plus-btn{

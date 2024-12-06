@@ -3,70 +3,74 @@ const isCoordinator = JSON.parse(map.dataset.isCoordinator); // Get the value fr
 
 const className = map.className;
 
-let rows, columns; 
+let rows, columns;
 
+// Correct the mapping to match CSS grid
 if (className === 'map-1') {
-    rows = 13; 
-    columns = 8;
+    rows = 8;    
+    columns = 13; 
 } else if (className === 'map-2') {
-    rows = 7; 
-    columns = 3; 
+    rows = 3;     
+    columns = 7;  
 } else if (className === 'map-3') {
-    rows = 5; 
-    columns = 1; 
+    rows = 1;
+    columns = 5;
 }
 
-// Dynamically create seats with plus buttons
-for (let col = 0; col < columns; col++) {
-    for (let row = 0; row < rows; row++) {
-        const seatNumber = row * columns + col + 1; // Calculate the seat number
-        const seat = document.createElement('div');
-        seat.className = 'seat';
+let seatNumber = 1;
 
-        seat.draggable = true;
-        seat.id = `${seatNumber}`;
-        seat.textContent = `${seatNumber}`;
-
-        
-        // Create Plus Button
-        const plusButton = document.createElement('button');
-        plusButton.className = 'plus-btn';
-        plusButton.textContent = '+';
-        
-        // Ensure data is fetched before appending button
-        fetchStudentData(seat, seatNumber).then(() => {
-            seat.appendChild(plusButton);
-        });
-
-        map.appendChild(seat);
-
-        seat.addEventListener('dragstart', handleDragStart);
-        seat.addEventListener('dragend', handleDragEnd);
+for (let row = 0; row < rows; row++) {         // Outer loop: Rows
+    for (let col = 0; col < columns; col++) {  // Inner loop: Columns
+        createSeat(row, col);
     }
 }
 
-// Handle drag-and-drop events based on the coordinator status
-if (isCoordinator) {
-    // Add event listeners for the map (drag over and drop)
-    map.addEventListener('dragover', handleDragOver);
-    map.addEventListener('drop', handleDrop);
+function createSeat(row, col) {
+    let seatNumber;
+    if (col%2==0) {
+        seatNumber = col * rows + row + 1
+    } else {
+        seatNumber = (col + 1) * rows - (row)
+    }
 
-    console.log('Drag and drop enabled for coordinators.');
-} else {
-    console.log('Drag and drop disabled for non-coordinators.');
+    const seat = document.createElement('div');
+    seat.className = 'seat';
+
+    seat.draggable = true;
+    seat.id = `${seatNumber}`;
+
+    seat.textContent = `${seatNumber}`;
+
+    // Create Plus Button
+    const plusButton = document.createElement('button');
+    plusButton.className = 'plus-btn';
+    plusButton.textContent = '+';
+
+    // Fetch student data after seat is created and then update the seat text
+    fetchStudentData(seat, seatNumber).then(() => {
+        seat.appendChild(plusButton);  // Add the button after data is fetched
+    });
+
+    // Append the seat to the map
+    map.appendChild(seat);
+
+    // Add drag event listeners
+    seat.addEventListener('dragstart', handleDragStart);
+    seat.addEventListener('dragend', handleDragEnd);
 }
 
-// Other functions remain unchanged
+// Function to fetch student data and update seat content
 async function fetchStudentData(seat, seatNumber) {
     try {
         // Fetch data from the PHP script
         const response = await fetch(`get-student-details.php?seatNumber=${seatNumber}`);
         const data = await response.json();
 
-        // Update the seat text with student info
+        // Update the seat text with student info, after fetching
         if (data.firstname && data.lastname) {
             seat.textContent = `${data.firstname} ${data.lastname}`;
         } else {
+            // Correctly show row and column values
             seat.textContent = `${seatNumber}`;
         }
     } catch (error) {
@@ -74,6 +78,7 @@ async function fetchStudentData(seat, seatNumber) {
         seat.textContent = `${seatNumber}`;
     }
 }
+
 
 function handleDragStart(event) {
     event.target.classList.add('dragging');
