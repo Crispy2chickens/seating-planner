@@ -52,6 +52,33 @@ function createSeat(row, col) {
         deletebutton.className = 'delete-btn';
         deletebutton.textContent = '-';
 
+        const addstudentmodal = document.querySelector('.addstudent-modal');
+        const addstudentmodalcontent = document.querySelector('.addstudent-modal-content');
+
+        plusButton.addEventListener('click', function () {
+            plusButton.style.opacity = 0;
+            deletebutton.style.opacity = 0;
+            // Get the position of the plus button
+            const buttonRect = plusButton.getBoundingClientRect();
+
+            // Position the modal content based on the button's position
+            addstudentmodalcontent.style.left = `${buttonRect.left}px`;  // Left of the button
+            addstudentmodalcontent.style.top = `${buttonRect.bottom + window.scrollY}px`;  // Bottom of the button + scroll offset
+            
+            // Show the modal (background)
+            addstudentmodal.style.display = 'block'; 
+        });
+        
+        // When the user clicks anywhere outside the modal content, close the modal
+        window.addEventListener('click', function (event) {
+            if (event.target === addstudentmodal) {
+                plusButton.style.opacity = 1;
+                deletebutton.style.opacity = 1;
+
+                addstudentmodal.style.display = 'none';
+            }
+        });
+
         deletebutton.addEventListener('click', () => {
             // Clear the seat's content
             seat.innerHTML = `${seatNumber}`;

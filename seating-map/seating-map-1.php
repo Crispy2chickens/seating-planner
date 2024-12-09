@@ -2,7 +2,6 @@
 include '../session.php'; // Adjust the path to where session.php is located
 
 $isCoordinator = $_SESSION['coordinator'];
-$idexamsession = $_SESSION['idexamsession'];
 $_SESSION['idvenue'] = '1';
 ?>
 
@@ -143,6 +142,13 @@ $_SESSION['idvenue'] = '1';
                 id="map"
                 data-is-coordinator="<?php echo htmlspecialchars(json_encode($_SESSION['coordinator'])); ?>">
                 <!-- Seats Here -->
+            </div>
+
+            <div class="addstudent-modal">
+                <div class="addstudent-modal-content">
+                    <button id="add-student">Add By Student</button>
+                    <button id="add-student">Add By Subjects</button>
+                </div>
             </div>
 
         </div>

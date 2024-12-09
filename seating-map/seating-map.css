@@ -380,6 +380,52 @@ h1{
     display: block;
 }
 
+.addstudent-modal {
+    display: none;
+    position: fixed;
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    overflow: auto;
+}
+  
+.addstudent-modal-content {
+    position: absolute; 
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+  
+.close-addstudent-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.close-addstudent-btn:hover,
+.close-addstudent-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}  
+
+#add-student {
+    display: block;
+    background-color: #071a45;
+    width: 150px;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+}
+
 @-webkit-keyframes fadeIn {
     from {opacity: 0;}
     to {opacity: 1;}
