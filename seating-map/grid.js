@@ -231,3 +231,58 @@ async function saveSeatPositions(seat1Id, seat2Id) {
         console.error('Error saving seat positions:', error);
     }
 }
+
+// Get elements for Add By Student button, modal content
+const addStudentButton = document.querySelector('.add-student');
+const addClassButton = document.querySelector('.add-class');
+const addstudentmodalcontent = document.querySelector('.addstudent-modal-content');
+
+// Add click event listener for Add By Student button
+addStudentButton.addEventListener('click', function () {
+    // Hide the Add By Student and Add By Class buttons
+    addStudentButton.style.display = 'none';
+    addClassButton.style.display = 'none';
+
+    // Create the dropdown
+    const studentDropdown = document.createElement('select');
+    studentDropdown.id = 'student-dropdown';
+    studentDropdown.innerHTML = '<option value="">Select Student</option>'; // Placeholder option
+
+    // Append the dropdown to the modal content
+    addstudentmodalcontent.appendChild(studentDropdown);
+
+    // Fetch students from backend and populate the dropdown
+    fetchStudents(studentDropdown);
+
+    // Event listener for when a student is selected from the dropdown
+    studentDropdown.addEventListener('change', function () {
+        const selectedStudentId = studentDropdown.value;
+
+        if (selectedStudentId) {
+            // Do something with the selected student ID, e.g., send it to the server or update the UI
+            console.log('Selected student ID:', selectedStudentId);
+        }
+    });
+});
+
+async function fetchStudents(studentDropdown) {
+    try {
+        // Make the request to your PHP script
+        const response = await fetch('get-students.php'); // Update the path as necessary
+        const data = await response.json();
+
+        if (data.success) {
+            // Populate the dropdown with student options
+            data.students.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.idstudents;
+                option.textContent = `${student.firstname} ${student.lastname}`;
+                studentDropdown.appendChild(option);
+            });
+        } else {
+            console.error('No students found or error in fetching data');
+        }
+    } catch (error) {
+        console.error('Error fetching students:', error);
+    }
+}
