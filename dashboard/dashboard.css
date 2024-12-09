@@ -151,7 +151,7 @@ h1{
 }
 
 .table-container{
-    max-height: 74%;
+    height: 65vh;
     overflow-y: auto;
     background-color: white;
     border-radius: 10px;

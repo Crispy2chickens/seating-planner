@@ -74,9 +74,11 @@ $_SESSION['idvenue'] = '1';
 
                 <div class="entity-container">
                     <h1 class="exam-title"><?php echo $title; ?></h1>
-                    <a class="edit-icon">
-                        <img src="../img/edit-icon-2.png" alt="Edit">
-                    </a>
+                    <?php if ($isCoordinator == 1): ?>
+                        <a class="edit-icon">
+                            <img src="../img/edit-icon-2.png" alt="Edit">
+                        </a>
+                    <?php endif; ?>
                 </div>
 
                 <div class="edit-section">
@@ -94,9 +96,11 @@ $_SESSION['idvenue'] = '1';
                 <div class="exam-timing">
                     <div class="entity-container">
                         <p class="date-container">Date: <?php echo $date; ?></p>
-                        <a class="edit-icon">
-                            <img src="../img/edit-icon-2.png" alt="Edit">
-                        </a>
+                        <?php if ($isCoordinator == 1): ?>
+                            <a class="edit-icon">
+                                <img src="../img/edit-icon-2.png" alt="Edit">
+                            </a>
+                        <?php endif; ?>
                     </div>
 
                     <div class="edit-section">
@@ -113,9 +117,11 @@ $_SESSION['idvenue'] = '1';
 
                     <div class="entity-container">
                         <p class="start-time">Start Time: <?php echo $starttime; ?></p>
-                        <a class="edit-icon">
-                            <img src="../img/edit-icon-2.png" alt="Edit">
-                        </a>
+                        <?php if ($isCoordinator == 1): ?>
+                            <a class="edit-icon">
+                                <img src="../img/edit-icon-2.png" alt="Edit">
+                            </a>
+                        <?php endif; ?>
                     </div>
 
                     <div class="edit-section">

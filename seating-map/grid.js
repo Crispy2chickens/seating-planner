@@ -41,16 +41,17 @@ function createSeat(row, col) {
 
     seat.textContent = `${seatNumber}`;
 
-    // Create Plus Button
-    const plusButton = document.createElement('button');
-    plusButton.className = 'plus-btn';
-    plusButton.textContent = '+';
+    if (isCoordinator) {
+        // Create Plus Button
+        const plusButton = document.createElement('button');
+        plusButton.className = 'plus-btn';
+        plusButton.textContent = '+';
 
-    // Fetch student data after seat is created and then update the seat text
-    fetchStudentData(seat, seatNumber).then(() => {
+        // Fetch student data after seat is created and then update the seat text
+        fetchStudentData(seat, seatNumber).then(() => {
         seat.appendChild(plusButton);  // Add the button after data is fetched
-    });
-
+        });
+    }
     // Append the seat to the map
     map.appendChild(seat);
 
