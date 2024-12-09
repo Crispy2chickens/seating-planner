@@ -1,5 +1,6 @@
 const map = document.querySelector('#map');
-const isCoordinator = JSON.parse(map.dataset.isCoordinator); // Get the value from data-is-coordinator attribute
+
+const isCoordinator = JSON.parse(map.dataset.isCoordinator);
 
 const className = map.className;
 
@@ -47,11 +48,50 @@ function createSeat(row, col) {
         plusButton.className = 'plus-btn';
         plusButton.textContent = '+';
 
+        const deletebutton = document.createElement('button');
+        deletebutton.className = 'delete-btn';
+        deletebutton.textContent = '-';
+
+        deletebutton.addEventListener('click', () => {
+            // Clear the seat's content
+            seat.innerHTML = `${seatNumber}`;
+
+            var examSessionValue = document.getElementById('idexamsession').value;
+            // console.log(examSessionValue); 
+
+            // Data to send to the PHP backend
+            const data = {
+                idexamsession: examSessionValue, 
+                idvenue: idvenue, 
+                seatno: `${seatNumber}`        
+            };
+        
+            // Send DELETE request to PHP script
+            fetch('delete-seat.php', {
+                method: 'POST', // Use POST for simplicity; can be changed to DELETE if desired
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    console.log('Seat deleted successfully.');
+                } else {
+                    console.error('Failed to delete seat:', result.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });         
+
         // Fetch student data after seat is created and then update the seat text
         fetchStudentData(seat, seatNumber).then(() => {
-        seat.appendChild(plusButton);  // Add the button after data is fetched
+            seat.appendChild(plusButton);
+            seat.appendChild(deletebutton);
         });
     }
+
     // Append the seat to the map
     map.appendChild(seat);
 

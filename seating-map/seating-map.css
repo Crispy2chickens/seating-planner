@@ -332,7 +332,7 @@ h1{
     cursor: grabbing;
 }
 
-.plus-btn {
+.plus-btn, .delete-btn {
     position: absolute;
     background-color: #c1c1c1;
     color: black;
@@ -351,8 +351,18 @@ h1{
     right: calc(10% * -1);
 }
 
+.map-1 .delete-btn{
+    bottom: calc(10% * -1);
+    right: calc(10% * -1);
+}
+
 .map-2 .plus-btn{
     top: calc(5% * -1);
+    right: calc(7% * -1);
+}
+
+.map-2 .delete-btn{
+    bottom: calc(5% * -1);
     right: calc(7% * -1);
 }
 
@@ -361,7 +371,12 @@ h1{
     right: calc(5% * -1);
 }
 
-.seat:hover .plus-btn{
+.map-3 .delete-btn{
+    bottom: calc(2% * -1);
+    right: calc(5% * -1);
+}
+
+.seat:hover .plus-btn, .seat:hover .delete-btn{
     display: block;
 }
 

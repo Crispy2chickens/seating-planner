@@ -2,6 +2,7 @@
 include '../session.php'; // Adjust the path to where session.php is located
 
 $isCoordinator = $_SESSION['coordinator'];
+$idexamsession = $_SESSION['idexamsession'];
 $_SESSION['idvenue'] = '1';
 ?>
 
@@ -138,7 +139,9 @@ $_SESSION['idvenue'] = '1';
                 </div>
             </div>
 
-            <div class="map-1" id="map" data-is-coordinator="<?php echo htmlspecialchars(json_encode($_SESSION['coordinator'])); ?>">
+            <div class="map-1"
+                id="map"
+                data-is-coordinator="<?php echo htmlspecialchars(json_encode($_SESSION['coordinator'])); ?>">
                 <!-- Seats Here -->
             </div>
 
