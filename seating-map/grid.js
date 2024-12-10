@@ -47,10 +47,8 @@ function createSeat(row, col) {
     // Always fetch student data, regardless of coordinator status
     fetchStudentData(seat, seatNumber).then(() => {
         // Check if the seat is still only an integer (unassigned seat)
-        if (/^\d+$/.test(seat.textContent)) {
+        if (/^\d+$/.test(seat.textContent)) {            
             if (isCoordinator) {
-                seat.style.opacity = '0.5'; // Set opacity to 0.5 for empty seats (only integers)
-
                 const plusButton = document.createElement('button');
                 plusButton.className = 'plus-btn';
                 plusButton.textContent = '+';
@@ -99,7 +97,8 @@ function createSeat(row, col) {
                 seat.appendChild(plusButton);
             }
         } else {
-            seat.style.opacity = '1'; // Reset opacity if seat is assigned to a student
+            // Assigned seats
+
             if (isCoordinator) {
                 const deletebutton = document.createElement('button');
                 deletebutton.className = 'delete-btn';
@@ -148,7 +147,7 @@ function createSeat(row, col) {
                     .catch(error => console.error('Error:', error));
                 });
                 seat.appendChild(deletebutton);
-        }
+            }
         }
     }).catch(error => {
         console.error("Error fetching student data:", error);
@@ -184,6 +183,7 @@ async function fetchStudentData(seat, seatNumber) {
         // Update the seat text with student info, after fetching
         if (data.firstname && data.lastname && data.candidateno) {
             let additionalInfo = '';
+
             if (data.wordprocessor !== 0) {
                 additionalInfo += `<span style="color: red; font-size: 0.7em;">WP</span> <br>`;
             }
@@ -214,35 +214,37 @@ function handleDragEnd(event) {
 }
 
 function handleDragOver(event) {
-    event.preventDefault(); // Allow dropping
+    event.preventDefault(); 
 }
 
 async function handleDrop(event) {
     event.preventDefault();
-    const draggedSeatId = event.dataTransfer.getData('text/plain');
+
+    const draggedSeatId = event.dataTransfer.getData('text/plain'); // ID of the dragged seat
     const draggedSeat = document.getElementById(draggedSeatId);
-    const targetSeat = event.target;
+    const targetSeat = event.target.closest('.seat'); // Ensure we get the correct seat element
 
-    // Swap positions only if the target is a seat
-    if (targetSeat.classList.contains('seat')) {
-        // Swap seat IDs
-        const draggedSeatId = draggedSeat.id;  
-        const targetSeatId = targetSeat.id;    
-    
-        // Swap their IDs
-        [draggedSeat.id, targetSeat.id] = [targetSeat.id, draggedSeat.id];
-    
-        // Swap their innerHTML (preserving the HTML structure including spans and other elements)
-        const draggedSeatHTML = draggedSeat.innerHTML;
-        const targetSeatHTML = targetSeat.innerHTML;
-
-        [draggedSeat.innerHTML, targetSeat.innerHTML] = [targetSeatHTML, draggedSeatHTML];
-    
-        // Send the updated seat positions (using their IDs) to the backend
-        await saveSeatPositions(draggedSeatId, targetSeatId);
-
-        window.location.reload();
+    if (!targetSeat || !draggedSeat) {
+        console.error('Drag and drop failed: target or dragged seat not found.');
+        return;
     }
+
+    // Swap the innerHTML
+    const draggedSeatContent = draggedSeat.innerHTML;
+    const targetSeatContent = targetSeat.innerHTML;
+
+    draggedSeat.innerHTML = targetSeatContent;
+    targetSeat.innerHTML = draggedSeatContent;
+
+    // Swap their IDs to maintain correct identification
+    const draggedSeatOriginalId = draggedSeat.id;
+    draggedSeat.id = targetSeat.id;
+    targetSeat.id = draggedSeatOriginalId;
+
+    // Save the updated seat positions to the backend
+    await saveSeatPositions(draggedSeat.id, targetSeat.id);
+
+    window.location.reload()
 }
 
 function addDragDropListeners(seat) {

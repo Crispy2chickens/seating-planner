@@ -55,7 +55,6 @@ h1{
     color: white;
 }
 
-
 .user-name {
     position: relative;
     display: inline-block;
@@ -321,14 +320,6 @@ h1{
 }
 
 .seat.dragging {
-    opacity: 0.5;
-    background-color: #d0d0d0;
-    cursor: grabbing;
-}
-
-.seat.dragging {
-    opacity: 0.5;
-    background-color: #d0d0d0;
     cursor: grabbing;
 }
 
