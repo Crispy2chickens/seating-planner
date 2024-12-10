@@ -402,6 +402,11 @@ h1{
     cursor: pointer;
 }
 
+.highlight-duplicate {
+    background-color: rgba(255, 0, 0, 0.2); /* Red overlay for duplicates */
+    border: 1px solid red;
+}
+
 @-webkit-keyframes fadeIn {
     from {opacity: 0;}
     to {opacity: 1;}

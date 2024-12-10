@@ -7,7 +7,7 @@ $idexamsession = isset($_SESSION['idexamsession']) ? $_SESSION['idexamsession'] 
 $seatNumber = isset($_GET['seatNumber']) ? (int) $_GET['seatNumber'] : 0;
 
 $query = "
-SELECT students.firstname, students.lastname, students.candidateno, students.wordprocessor, students.extratime, students.restbreak
+SELECT students.idstudents, students.firstname, students.lastname, students.candidateno, students.wordprocessor, students.extratime, students.restbreak
 FROM studentexams
 INNER JOIN students ON studentexams.idstudents = students.idstudents
 WHERE studentexams.seatno = ?
@@ -20,6 +20,8 @@ $stmt->bind_param("iii", $seatNumber, $idexamsession, $idvenue);
 $stmt->execute();
 $result = $stmt->get_result();
 
+$response = []; // Initialize the response array
+
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $response['firstname'] = $row['firstname'];
@@ -28,6 +30,7 @@ if ($result->num_rows > 0) {
     $response['wordprocessor'] = $row['wordprocessor'];
     $response['extratime'] = $row['extratime'];
     $response['restbreak'] = $row['restbreak'];
+    $response['idstudents'] = $row['idstudents']; // Fetch the idstudents here
 }
 
 header('Content-Type: application/json');

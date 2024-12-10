@@ -1,14 +1,13 @@
 const map = document.querySelector('#map');
 
 const isCoordinator = JSON.parse(map.dataset.isCoordinator);
-
 const className = map.className;
 
 let rows, columns;
 
 let selectedSeatNumber = null;
 
-// Correct the mapping to match CSS grid
+// Set rows and columns based on the map class
 if (className === 'map-1') {
     rows = 8;    
     columns = 13; 
@@ -22,7 +21,8 @@ if (className === 'map-1') {
 
 let seatNumber = 1;
 
-for (let row = 0; row < rows; row++) {         // Outer loop: Rows
+// Loop through rows and columns to create seats
+for (let row = 0; row < rows; row++) {  // Outer loop: Rows
     for (let col = 0; col < columns; col++) {  // Inner loop: Columns
         createSeat(row, col);
     }
@@ -38,15 +38,13 @@ function createSeat(row, col) {
 
     const seat = document.createElement('div');
     seat.className = 'seat';
-
     seat.draggable = true;
     seat.id = `${seatNumber}`;
-
     seat.textContent = `${seatNumber}`;
 
     // Always fetch student data, regardless of coordinator status
     fetchStudentData(seat, seatNumber).then(() => {
-        // Check if the seat is still only an integer (unassigned seat)
+        // Check if the seat is still an integer (unassigned seat)
         if (/^\d+$/.test(seat.textContent)) {            
             if (isCoordinator) {
                 const plusButton = document.createElement('button');
@@ -88,7 +86,6 @@ function createSeat(row, col) {
                 window.addEventListener('click', function (event) {
                     if (event.target === addstudentmodal) {
                         plusButton.style.opacity = 1;
-
                         addstudentmodal.style.display = 'none';
                     }
                 });
@@ -98,7 +95,6 @@ function createSeat(row, col) {
             }
         } else {
             // Assigned seats
-
             if (isCoordinator) {
                 const deletebutton = document.createElement('button');
                 deletebutton.className = 'delete-btn';
@@ -176,11 +172,9 @@ if (isCoordinator) {
 // Function to fetch student data and update seat content
 async function fetchStudentData(seat, seatNumber) {
     try {
-        // Fetch data from the PHP script
         const response = await fetch(`get-student-details.php?seatNumber=${seatNumber}`);
         const data = await response.json();
 
-        // Update the seat text with student info, after fetching
         if (data.firstname && data.lastname && data.candidateno) {
             let additionalInfo = '';
 
@@ -195,12 +189,12 @@ async function fetchStudentData(seat, seatNumber) {
             }
 
             seat.innerHTML = `<div>${data.firstname} ${data.lastname} <br><span style="font-size: 0.8em;">${data.candidateno}</span><br>${additionalInfo}</div>`;
+            seat.setAttribute('data-idstudents', data.idstudents); // Add the student ID as a data attribute
         } else {
-            // Correctly show row and column values
             seat.textContent = `${seatNumber}`;
         }
     } catch (error) {
-        seat.textContent = `${seatNumber}`;  // Fallback if fetching data fails
+        seat.textContent = `${seatNumber}`;
     }
 }
 
@@ -286,11 +280,6 @@ async function handleDrop(event) {
     await saveSeatPositions(draggedSeat.id, targetSeat.id);
 
     window.location.reload();
-}
-
-function addDragDropListeners(seat) {
-    seat.addEventListener('dragstart', handleDragStart);
-    seat.addEventListener('dragend', handleDragEnd);
 }
 
 async function saveSeatPositions(seat1Id, seat2Id) {
@@ -416,3 +405,33 @@ async function fetchStudents(studentDropdown) {
         console.error('Error fetching students:', error);
     }
 }
+
+function highlightDuplicateSeats() {
+    const seats = document.querySelectorAll('.seat');
+    const studentSeatMap = new Map(); // Map to store student IDs and their corresponding seat elements
+
+    // Iterate through each seat to collect student IDs
+    seats.forEach(seat => {
+        const studentInfo = seat.querySelector('div');
+        if (studentInfo) {
+            const idstudents = seat.getAttribute('data-idstudents'); // Ensure this attribute is set correctly
+
+            if (idstudents) {
+                if (studentSeatMap.has(idstudents)) {
+                    // Duplicate found
+                    studentSeatMap.get(idstudents).classList.add('highlight-duplicate'); // Highlight existing seat
+                    seat.classList.add('highlight-duplicate'); // Highlight current seat
+                } else {
+                    studentSeatMap.set(idstudents, seat); // Store the seat element for this student ID
+                }
+            }
+        }
+    });
+}
+
+// Call this after all seats are rendered
+Promise.all(
+    Array.from(document.querySelectorAll('.seat')).map(seat => fetchStudentData(seat, seat.id))
+).then(() => {
+    highlightDuplicateSeats();
+});
