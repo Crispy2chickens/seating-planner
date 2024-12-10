@@ -1,13 +1,16 @@
 const map = document.querySelector('#map');
 
 const isCoordinator = JSON.parse(map.dataset.isCoordinator);
+
 const className = map.className;
 
 let rows, columns;
 
 let selectedSeatNumber = null;
 
-// Set rows and columns based on the map class
+let studentIDs = {};
+
+// Correct the mapping to match CSS grid
 if (className === 'map-1') {
     rows = 8;    
     columns = 13; 
@@ -21,8 +24,7 @@ if (className === 'map-1') {
 
 let seatNumber = 1;
 
-// Loop through rows and columns to create seats
-for (let row = 0; row < rows; row++) {  // Outer loop: Rows
+for (let row = 0; row < rows; row++) {         // Outer loop: Rows
     for (let col = 0; col < columns; col++) {  // Inner loop: Columns
         createSeat(row, col);
     }
@@ -38,13 +40,15 @@ function createSeat(row, col) {
 
     const seat = document.createElement('div');
     seat.className = 'seat';
+
     seat.draggable = true;
     seat.id = `${seatNumber}`;
-    seat.textContent = `${seatNumber}`;
+
+    // seat.textContent = `${seatNumber}`;
 
     // Always fetch student data, regardless of coordinator status
     fetchStudentData(seat, seatNumber).then(() => {
-        // Check if the seat is still an integer (unassigned seat)
+        // Check if the seat is still only an integer (unassigned seat)
         if (/^\d+$/.test(seat.textContent)) {            
             if (isCoordinator) {
                 const plusButton = document.createElement('button');
@@ -86,6 +90,7 @@ function createSeat(row, col) {
                 window.addEventListener('click', function (event) {
                     if (event.target === addstudentmodal) {
                         plusButton.style.opacity = 1;
+
                         addstudentmodal.style.display = 'none';
                     }
                 });
@@ -95,6 +100,7 @@ function createSeat(row, col) {
             }
         } else {
             // Assigned seats
+
             if (isCoordinator) {
                 const deletebutton = document.createElement('button');
                 deletebutton.className = 'delete-btn';
@@ -136,6 +142,7 @@ function createSeat(row, col) {
                     .then(result => {
                         if (result.success) {
                             console.log('Seat deleted successfully.');
+                            window.location.reload();
                         } else {
                             console.error('Failed to delete seat:', result.error);
                         }
@@ -175,6 +182,7 @@ async function fetchStudentData(seat, seatNumber) {
         const response = await fetch(`get-student-details.php?seatNumber=${seatNumber}`);
         const data = await response.json();
 
+        // Check if student data is returned
         if (data.firstname && data.lastname && data.candidateno) {
             let additionalInfo = '';
 
@@ -188,13 +196,45 @@ async function fetchStudentData(seat, seatNumber) {
                 additionalInfo += `<span style="color: red; font-size: 0.7em;">Rest Break</span> <br>`;
             }
 
-            seat.innerHTML = `<div>${data.firstname} ${data.lastname} <br><span style="font-size: 0.8em;">${data.candidateno}</span><br>${additionalInfo}</div>`;
-            seat.setAttribute('data-idstudents', data.idstudents); // Add the student ID as a data attribute
+            // Update the seat's text while preserving buttons
+            let studentInfo = document.createElement('div');
+            studentInfo.innerHTML = `${data.firstname} ${data.lastname} <br><span style="font-size: 0.8em;">${data.candidateno}</span><br>${additionalInfo}`;
+            
+            // Remove any existing student info (optional)
+            const existingInfo = seat.querySelector('.student-info');
+            if (existingInfo) {
+                seat.removeChild(existingInfo);
+            }
+
+            studentInfo.className = 'student-info';
+            seat.appendChild(studentInfo);
+
+            studentIDs[`${seatNumber}`] = data.idstudents;
         } else {
-            seat.textContent = `${seatNumber}`;
+            // Update with seat number only, preserving buttons
+            const existingInfo = seat.querySelector('.student-info');
+            if (existingInfo) {
+                seat.removeChild(existingInfo);
+            }
+
+            const seatNumberElement = document.createElement('div');
+            seatNumberElement.className = 'student-info';
+            seatNumberElement.textContent = `${seatNumber}`;
+            seat.appendChild(seatNumberElement);
         }
     } catch (error) {
-        seat.textContent = `${seatNumber}`;
+        console.error('Error fetching student data:', error);
+
+        // Preserve seat number as fallback
+        const existingInfo = seat.querySelector('.student-info');
+        if (existingInfo) {
+            seat.removeChild(existingInfo);
+        }
+
+        const seatNumberElement = document.createElement('div');
+        seatNumberElement.className = 'student-info';
+        seatNumberElement.textContent = `${seatNumber}`;
+        seat.appendChild(seatNumberElement);
     }
 }
 
@@ -280,6 +320,11 @@ async function handleDrop(event) {
     await saveSeatPositions(draggedSeat.id, targetSeat.id);
 
     window.location.reload();
+}
+
+function addDragDropListeners(seat) {
+    seat.addEventListener('dragstart', handleDragStart);
+    seat.addEventListener('dragend', handleDragEnd);
 }
 
 async function saveSeatPositions(seat1Id, seat2Id) {
@@ -406,32 +451,34 @@ async function fetchStudents(studentDropdown) {
     }
 }
 
-function highlightDuplicateSeats() {
-    const seats = document.querySelectorAll('.seat');
-    const studentSeatMap = new Map(); // Map to store student IDs and their corresponding seat elements
+console.log(studentIDs);
 
-    // Iterate through each seat to collect student IDs
-    seats.forEach(seat => {
-        const studentInfo = seat.querySelector('div');
-        if (studentInfo) {
-            const idstudents = seat.getAttribute('data-idstudents'); // Ensure this attribute is set correctly
-
-            if (idstudents) {
-                if (studentSeatMap.has(idstudents)) {
-                    // Duplicate found
-                    studentSeatMap.get(idstudents).classList.add('highlight-duplicate'); // Highlight existing seat
-                    seat.classList.add('highlight-duplicate'); // Highlight current seat
-                } else {
-                    studentSeatMap.set(idstudents, seat); // Store the seat element for this student ID
-                }
+function highlightDuplicateSeats(studentIDs) {
+    // Create a map to count occurrences of each idstudent
+    const idCount = {};
+    
+    // Count occurrences of each student ID
+    for (const seat in studentIDs) {
+        const id = studentIDs[seat];
+        idCount[id] = (idCount[id] || 0) + 1;
+    }
+    
+    // Loop through the studentIDs to identify duplicates and apply a red overlay
+    for (const seat in studentIDs) {
+        const id = studentIDs[seat];
+        if (idCount[id] > 1) {
+            // Use the actual seat ID to select the element
+            const seatElement = document.getElementById(seat); // Fixed selector
+            if (seatElement) {
+                seatElement.style.backgroundColor = "rgba(255, 0, 0, 0.2)"; 
+                seatElement.style.border = "1px solid red";
             }
         }
-    });
+    }
 }
 
-// Call this after all seats are rendered
 Promise.all(
     Array.from(document.querySelectorAll('.seat')).map(seat => fetchStudentData(seat, seat.id))
 ).then(() => {
-    highlightDuplicateSeats();
+    highlightDuplicateSeats(studentIDs);
 });
