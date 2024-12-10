@@ -248,14 +248,35 @@ h1{
     height: calc(50vh - 140px);
 }
 
-.user-container{
+.user-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0 5px 20px;
+    margin-bottom: 5px;
+}
+
+.content-container {
     display: flex;
     justify-content: space-between;
-    padding: 5px 1vw;
+    align-items: center;
+    flex: 1; /* Take up remaining space */
+}
+
+.user-container button{
+    width: 15px;
+    border: none;
+    background-color: white;
+}
+
+.trash-icon {
+    width: 15px; 
+    height: auto;
+    cursor: pointer;
 }
 
 .user-container:first-child{
-    padding: 10px 1vw 5px 1vw;
+    padding: 10px 0 5px 20px;
 }
 
 #add-invigilators{
