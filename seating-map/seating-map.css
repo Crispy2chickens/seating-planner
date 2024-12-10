@@ -346,36 +346,6 @@ h1{
     display: none;
 }
 
-.map-1 .plus-btn{
-    top: calc(10% * -1);
-    right: calc(10% * -1);
-}
-
-.map-1 .delete-btn{
-    bottom: calc(10% * -1);
-    right: calc(10% * -1);
-}
-
-.map-2 .plus-btn{
-    top: calc(5% * -1);
-    right: calc(7% * -1);
-}
-
-.map-2 .delete-btn{
-    bottom: calc(5% * -1);
-    right: calc(7% * -1);
-}
-
-.map-3 .plus-btn{
-    top: calc(2% * -1);
-    right: calc(5% * -1);
-}
-
-.map-3 .delete-btn{
-    bottom: calc(2% * -1);
-    right: calc(5% * -1);
-}
-
 .seat:hover .plus-btn, .seat:hover .delete-btn{
     display: block;
 }

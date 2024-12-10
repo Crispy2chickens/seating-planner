@@ -28,10 +28,10 @@ for (let row = 0; row < rows; row++) {         // Outer loop: Rows
 
 function createSeat(row, col) {
     let seatNumber;
-    if (col%2==0) {
-        seatNumber = col * rows + row + 1
+    if (col % 2 == 0) {
+        seatNumber = col * rows + row + 1;
     } else {
-        seatNumber = (col + 1) * rows - (row)
+        seatNumber = (col + 1) * rows - (row);
     }
 
     const seat = document.createElement('div');
@@ -42,82 +42,113 @@ function createSeat(row, col) {
 
     seat.textContent = `${seatNumber}`;
 
-    if (isCoordinator) {
-        // Create Plus Button
-        const plusButton = document.createElement('button');
-        plusButton.className = 'plus-btn';
-        plusButton.textContent = '+';
+    // Always fetch student data, regardless of coordinator status
+    fetchStudentData(seat, seatNumber).then(() => {
+        // Check if the seat is still only an integer (unassigned seat)
+        if (/^\d+$/.test(seat.textContent)) {
+            if (isCoordinator) {
+                seat.style.opacity = '0.5'; // Set opacity to 0.5 for empty seats (only integers)
 
-        const deletebutton = document.createElement('button');
-        deletebutton.className = 'delete-btn';
-        deletebutton.textContent = '-';
+                const plusButton = document.createElement('button');
+                plusButton.className = 'plus-btn';
+                plusButton.textContent = '+';
 
-        const addstudentmodal = document.querySelector('.addstudent-modal');
-        const addstudentmodalcontent = document.querySelector('.addstudent-modal-content');
-
-        plusButton.addEventListener('click', function () {
-            plusButton.style.opacity = 0;
-            deletebutton.style.opacity = 0;
-            // Get the position of the plus button
-            const buttonRect = plusButton.getBoundingClientRect();
-
-            // Position the modal content based on the button's position
-            addstudentmodalcontent.style.left = `${buttonRect.left}px`;  // Left of the button
-            addstudentmodalcontent.style.top = `${buttonRect.bottom + window.scrollY}px`;  // Bottom of the button + scroll offset
-            
-            // Show the modal (background)
-            addstudentmodal.style.display = 'block'; 
-        });
-        
-        // When the user clicks anywhere outside the modal content, close the modal
-        window.addEventListener('click', function (event) {
-            if (event.target === addstudentmodal) {
-                plusButton.style.opacity = 1;
-                deletebutton.style.opacity = 1;
-
-                addstudentmodal.style.display = 'none';
-            }
-        });
-
-        deletebutton.addEventListener('click', () => {
-            // Clear the seat's content
-            seat.innerHTML = `${seatNumber}`;
-
-            var examSessionValue = document.getElementById('idexamsession').value;
-            // console.log(examSessionValue); 
-
-            // Data to send to the PHP backend
-            const data = {
-                idexamsession: examSessionValue, 
-                idvenue: idvenue, 
-                seatno: `${seatNumber}`        
-            };
-        
-            // Send DELETE request to PHP script
-            fetch('delete-seat.php', {
-                method: 'POST', // Use POST for simplicity; can be changed to DELETE if desired
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    console.log('Seat deleted successfully.');
-                } else {
-                    console.error('Failed to delete seat:', result.error);
+                // Position buttons based on class names (map-1, map-2, map-3)
+                if (map.classList.contains('map-1')) {
+                    plusButton.style.top = 'calc(10% * -1)';
+                    plusButton.style.right = 'calc(10% * -1)';
+                } else if (map.classList.contains('map-2')) {
+                    plusButton.style.top = 'calc(5% * -1)';
+                    plusButton.style.right = 'calc(7% * -1)';
+                } else if (map.classList.contains('map-3')) {
+                    plusButton.style.top = 'calc(2% * -1)';
+                    plusButton.style.right = 'calc(5% * -1)';
                 }
-            })
-            .catch(error => console.error('Error:', error));
-        });         
 
-        // Fetch student data after seat is created and then update the seat text
-        fetchStudentData(seat, seatNumber).then(() => {
-            seat.appendChild(plusButton);
-            seat.appendChild(deletebutton);
-        });
-    }
+                const addstudentmodal = document.querySelector('.addstudent-modal');
+                const addstudentmodalcontent = document.querySelector('.addstudent-modal-content');
+
+                plusButton.addEventListener('click', function () {
+                    plusButton.style.opacity = 0;
+                    // Get the position of the plus button
+                    const buttonRect = plusButton.getBoundingClientRect();
+
+                    // Position the modal content based on the button's position
+                    addstudentmodalcontent.style.left = `${buttonRect.left}px`;  // Left of the button
+                    addstudentmodalcontent.style.top = `${buttonRect.bottom + window.scrollY}px`;  // Bottom of the button + scroll offset
+                    
+                    // Show the modal (background)
+                    addstudentmodal.style.display = 'block'; 
+                });
+                
+                // When the user clicks anywhere outside the modal content, close the modal
+                window.addEventListener('click', function (event) {
+                    if (event.target === addstudentmodal) {
+                        plusButton.style.opacity = 1;
+
+                        addstudentmodal.style.display = 'none';
+                    }
+                });
+
+                // Append the buttons after data is fetched
+                seat.appendChild(plusButton);
+            }
+        } else {
+            seat.style.opacity = '1'; // Reset opacity if seat is assigned to a student
+            if (isCoordinator) {
+                const deletebutton = document.createElement('button');
+                deletebutton.className = 'delete-btn';
+                deletebutton.textContent = '-';
+
+                if (map.classList.contains('map-1')) {
+                    deletebutton.style.top = 'calc(10% * -1)';
+                    deletebutton.style.right = 'calc(10% * -1)';
+                } else if (map.classList.contains('map-2')) {
+                    deletebutton.style.top = 'calc(5% * -1)';
+                    deletebutton.style.right = 'calc(7% * -1)';
+                } else if (map.classList.contains('map-3')) {
+                    deletebutton.style.top = 'calc(2% * -1)';
+                    deletebutton.style.right = 'calc(5% * -1)';
+                }
+    
+                deletebutton.addEventListener('click', () => {
+                    // Clear the seat's content
+                    seat.innerHTML = `${seatNumber}`;
+    
+                    var examSessionValue = document.getElementById('idexamsession').value;
+    
+                    // Data to send to the PHP backend
+                    const data = {
+                        idexamsession: examSessionValue,
+                        idvenue: idvenue,
+                        seatno: `${seatNumber}`
+                    };
+    
+                    // Send DELETE request to PHP script
+                    fetch('delete-seat.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.success) {
+                            console.log('Seat deleted successfully.');
+                        } else {
+                            console.error('Failed to delete seat:', result.error);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+                seat.appendChild(deletebutton);
+        }
+        }
+    }).catch(error => {
+        console.error("Error fetching student data:", error);
+        seat.textContent = `${seatNumber}`;  // Fallback if fetching fails
+    });
 
     // Append the seat to the map
     map.appendChild(seat);
@@ -159,13 +190,12 @@ async function fetchStudentData(seat, seatNumber) {
             }
 
             seat.innerHTML = `<div>${data.firstname} ${data.lastname} <br><span style="font-size: 0.8em;">${data.candidateno}</span><br>${additionalInfo}</div>`;
-
         } else {
             // Correctly show row and column values
             seat.textContent = `${seatNumber}`;
         }
     } catch (error) {
-        seat.textContent = `${seatNumber}`;
+        seat.textContent = `${seatNumber}`;  // Fallback if fetching data fails
     }
 }
 
@@ -205,6 +235,8 @@ async function handleDrop(event) {
     
         // Send the updated seat positions (using their IDs) to the backend
         await saveSeatPositions(draggedSeatId, targetSeatId);
+
+        window.location.reload();
     }
 }
 
