@@ -153,7 +153,7 @@ $_SESSION['idvenue'] = '1';
 
         </div>
 
-        <div class=" right-page">
+        <div class="right-page">
             <div class="invigilators-reg">
                 <h2 class="invigilators-h2">Invigilators</h2>
                 <div class="invigilators-container">

@@ -106,6 +106,7 @@ $isCoordinator = $_SESSION['coordinator'];
     <script src="archive.js"></script>
     <script src="add-exam.js"></script>
     <script src="delete.js"></script>
+    <script src="remove-rightpage-redirection.js"></script>
 </body>
 
 </html>
