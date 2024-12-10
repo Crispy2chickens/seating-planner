@@ -6,6 +6,8 @@ const className = map.className;
 
 let rows, columns;
 
+let selectedSeatNumber = null;
+
 // Correct the mapping to match CSS grid
 if (className === 'map-1') {
     rows = 8;    
@@ -70,6 +72,9 @@ function createSeat(row, col) {
 
                 plusButton.addEventListener('click', function () {
                     plusButton.style.opacity = 0;
+                    const seatElement = plusButton.parentElement;
+                    selectedSeatNumber = seatElement.id;  
+
                     // Get the position of the plus button
                     const buttonRect = plusButton.getBoundingClientRect();
 
@@ -278,10 +283,15 @@ addStudentButton.addEventListener('click', function () {
     // Create the dropdown
     const studentDropdown = document.createElement('select');
     studentDropdown.id = 'student-dropdown';
-    studentDropdown.innerHTML = '<option value="">Select Student</option>'; // Placeholder option
+    studentDropdown.innerHTML = '<option value="">Select Student</option>'; 
+
+    const submitstudent = document.createElement('button');
+    submitstudent.id = 'submit-student';
+    submitstudent.innerHTML = 'Add Student';
 
     // Append the dropdown to the modal content
     addstudentmodalcontent.appendChild(studentDropdown);
+    addstudentmodalcontent.appendChild(submitstudent);
 
     // Fetch students from backend and populate the dropdown
     fetchStudents(studentDropdown);
@@ -294,6 +304,51 @@ addStudentButton.addEventListener('click', function () {
             // Do something with the selected student ID, e.g., send it to the server or update the UI
             console.log('Selected student ID:', selectedStudentId);
         }
+    });
+
+    submitstudent.addEventListener('click', function () {
+        const selectedStudentId = studentDropdown.value;
+        const examSessionId = document.getElementById('idexamsession').value;  // Get the exam session ID
+
+        // Validate the required fields
+        if (!selectedStudentId) {
+            alert('Please select a student.');
+            return;
+        }
+        if (!examSessionId) {
+            alert('Please select an exam session.');
+            return;
+        }
+
+        // Send the student assignment to the backend
+        const seatNumber = selectedSeatNumber;
+        const data = {
+            idstudents: selectedStudentId,
+            idexamsession: examSessionId,
+            idvenue: idvenue,
+            seatno: seatNumber  // This should be dynamically set based on the seat clicked
+        };
+
+        fetch('add-student-to-exam.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert('Student successfully added to exam.');
+                window.location.reload()
+            } else {
+                alert('Error adding student to the exam.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error processing the request.');
+        });
     });
 });
 

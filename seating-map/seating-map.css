@@ -391,13 +391,24 @@ h1{
     color: white;
     padding: 10px;
     border: none;
-    border-radius: 10px;
     cursor: pointer;
     margin: 10px;
 }
 
 #student-dropdown{
+    display: block;
     margin: 10px;
+}
+
+#submit-student{
+    width: 110px;
+    margin: 0 0 10px 0;
+    background-color: #071a45;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
 }
 
 @-webkit-keyframes fadeIn {
