@@ -207,10 +207,32 @@ async function fetchStudentData(seat, seatNumber) {
 function handleDragStart(event) {
     event.target.classList.add('dragging');
     event.dataTransfer.setData('text/plain', event.target.id); 
+
+    const seatElement = event.target;
+    const plusButton = seatElement.querySelector('.plus-btn');
+    const deleteButton = seatElement.querySelector('.delete-btn');
+
+    if (plusButton) {
+        plusButton.style.display = 'none';
+    }
+    if (deleteButton) {
+        deleteButton.style.display = 'none';
+    }
 }
 
 function handleDragEnd(event) {
     event.target.classList.remove('dragging');
+
+    const seatElement = event.target;
+    const plusButton = seatElement.querySelector('.plus-btn');
+    const deleteButton = seatElement.querySelector('.delete-btn');
+
+    if (plusButton) {
+        plusButton.style.display = 'block';
+    }
+    if (deleteButton) {
+        deleteButton.style.display = 'block';
+    }
 }
 
 function handleDragOver(event) {
@@ -241,10 +263,29 @@ async function handleDrop(event) {
     draggedSeat.id = targetSeat.id;
     targetSeat.id = draggedSeatOriginalId;
 
+    // Reset opacity of the buttons after the drop
+    const plusButtonDragged = draggedSeat.querySelector('.plus-btn');
+    const deleteButtonDragged = draggedSeat.querySelector('.delete-btn');
+    const plusButtonTarget = targetSeat.querySelector('.plus-btn');
+    const deleteButtonTarget = targetSeat.querySelector('.delete-btn');
+
+    if (plusButtonDragged) {
+        plusButtonDragged.style.opacity = '1';
+    }
+    if (deleteButtonDragged) {
+        deleteButtonDragged.style.opacity = '1';
+    }
+    if (plusButtonTarget) {
+        plusButtonTarget.style.opacity = '1';
+    }
+    if (deleteButtonTarget) {
+        deleteButtonTarget.style.opacity = '1';
+    }
+
     // Save the updated seat positions to the backend
     await saveSeatPositions(draggedSeat.id, targetSeat.id);
 
-    window.location.reload()
+    window.location.reload();
 }
 
 function addDragDropListeners(seat) {
