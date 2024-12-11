@@ -147,7 +147,7 @@ $_SESSION['idvenue'] = '1';
             <div class="addstudent-modal">
                 <div class="addstudent-modal-content">
                     <button id="add-student" class="add-student">Add By Student</button>
-                    <button id="add-subject" class="add-subject">Add By Subjects</button>
+                    <button id="add-subject" class="add-subject">Add By Class</button>
                 </div>
             </div>
 

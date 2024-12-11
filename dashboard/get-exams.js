@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Insert rows dynamically based on the provided data
         data.forEach(row => {
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>
+            if (isCoordinator){
+                tr.innerHTML = `<td>
                                 <button class="operation-buttons" onclick="setSessionAndRedirect('${row.title}', '${row.date}', '${row.starttime}', '${row.idexamsession}', '../seating-map/seating-map-1.php')">
                                     ${row.title}
                                 </button>
@@ -61,6 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <button class="operation-buttons" data-id="${row.idexamsession}" data-action="archive"><img src="../img/archive-icon.png"></button>
                                 <button class="operation-buttons" data-id="${row.idexamsession}" data-action="delete-exam"><img src="../img/trash-icon.png"></button>
                             </td>`;
+            } else {
+                tr.innerHTML = `<td>
+                                    <button class="operation-buttons" onclick="setSessionAndRedirect('${row.title}', '${row.date}', '${row.starttime}', '${row.idexamsession}', '../seating-map/seating-map-1.php')">
+                                        ${row.title}
+                                    </button>
+                                </td>
+                                <td>${row.date}</td>
+                                <td>${row.starttime}</td>
+                                <td>
+                                    <button class="operation-buttons" onclick="setSessionAndRedirect('${row.title}', '${row.date}', '${row.starttime}', '${row.idexamsession}', '../seating-map/seating-map-1.php')">
+                                        <img src="../img/view-icon.png">
+                                    </button>
+                                </td>`;
+            }
             tableBody.appendChild(tr);
         });
 

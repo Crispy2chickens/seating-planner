@@ -476,11 +476,11 @@ addSubjectButton.addEventListener('click', function () {
     // Create the dropdown
     const subjectDropdown = document.createElement('select');
     subjectDropdown.id = 'subject-dropdown';
-    subjectDropdown.innerHTML = '<option value="">Select Subject</option>';
+    subjectDropdown.innerHTML = '<option value="">Select Class</option>';
 
     const submitsubject = document.createElement('button');
     submitsubject.id = 'submit-subject';
-    submitsubject.innerHTML = 'Add Subject';
+    submitsubject.innerHTML = 'Add Class';
 
     // Append the dropdown to the modal content
     addstudentmodalcontent.appendChild(subjectDropdown);
