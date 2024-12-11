@@ -175,7 +175,15 @@ $_SESSION['idvenue'] = '3';
                 </div>
             </div>
 
-            <div class="messaging-box"></div>
+            <div class="chatbox">
+                <div class="chatbox-messages" id="chatboxMessages">
+                    <!-- Messages will be dynamically loaded here -->
+                </div>
+                <div class="chatbox-input">
+                    <input type="text" id="chatInput" placeholder="Type a message...">
+                    <button id="sendButton">Send</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -187,6 +195,10 @@ $_SESSION['idvenue'] = '3';
         <script src="add-invigilators.js"></script>
     <?php endif; ?>
     <script src="grid.js"></script>
+    <script>
+        const idusers = <?php echo json_encode($_SESSION['idusers']); ?>;
+    </script>
+    <script src="messages.js"></script>
 </body>
 
 </html>
