@@ -85,28 +85,31 @@ function createSeat(row, col) {
                     // Show the modal (background)
                     addstudentmodal.style.display = 'block'; 
                 });
-                
-                // When the user clicks anywhere outside the modal content, close the modal
+
                 window.addEventListener('click', function (event) {
                     if (event.target === addstudentmodal) {
                         plusButton.style.opacity = 1;
 
+                        // Reset modal display
                         addstudentmodal.style.display = 'none';
+                
+                        // Reset buttons
                         addStudentButton.style.display = 'block';
                         addSubjectButton.style.display = 'block';
-
-                        const subjectDropdown = document.querySelector('#subject-dropdown')
-                        const submitsubject = document.querySelector('#submit-subject')
-                        subjectDropdown.style.display = 'none';
-                        submitsubject.style.display = 'none';
-
-                        const studentDropdown = document.querySelector('#student-dropdown')
-                        const submitstudent = document.querySelector('#submit-student')
-                        studentDropdown.style.display = 'none';
-                        submitstudent.style.display = 'none';
+                
+                        // Clear dropdowns and submit buttons
+                        const studentDropdown = document.querySelector('#student-dropdown');
+                        const submitStudent = document.querySelector('#submit-student');
+                        const subjectDropdown = document.querySelector('#subject-dropdown');
+                        const submitSubject = document.querySelector('#submit-subject');
+                
+                        if (studentDropdown) studentDropdown.remove();
+                        if (submitStudent) submitStudent.remove();
+                        if (subjectDropdown) subjectDropdown.remove();
+                        if (submitSubject) submitSubject.remove();
                     }
                 });
-
+                
                 // Append the buttons after data is fetched
                 seat.appendChild(plusButton);
             }
@@ -497,7 +500,7 @@ addSubjectButton.addEventListener('click', function () {
         const selectedSubjectId = subjectDropdown.value;
         const examSessionId = document.getElementById('idexamsession').value;
         let seatNumber = selectedSeatNumber;
-
+    
         try {
             // Fetch students for the selected subject
             const response = await fetch('fetch-students-by-subject.php', {
@@ -505,53 +508,67 @@ addSubjectButton.addEventListener('click', function () {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ idsubjects: selectedSubjectId })
             });
-
+    
             const result = await response.json();
-
+    
             if (!result.success) {
                 console.error('Error:', result.message); // Log the error message
                 return;
             }
-
+    
             const students = result.students;
-
-            seat = document.getElementById(`${seatNumber}`);
+    
             let studentIndex = 0;
-
+    
             while (studentIndex < students.length) {
                 const seat = document.getElementById(`${seatNumber}`); // Get the current seat by its ID    
-            
+    
                 // Check if seat is valid (i.e., contains a number, not filled with other content)
                 if (/^\+?\d+$/.test(seat.textContent)) {
                     // Assign student names to the seat
                     const student = students[studentIndex];
+    
+                    // Prepare data for backend update
+                    const data = {
+                        idstudents: student.idstudents,
+                        idexamsession: examSessionId,
+                        idvenue: idvenue, // Assume `idvenue` is globally available
+                        seatno: seatNumber
+                    };
 
-                    let additionalInfo = '';
-
-                    if (student.wordprocessor !== 0) {
-                        additionalInfo += `<span style="color: red; font-size: 0.7em;">WP</span> <br>`;
+                    console.log(data);
+    
+                    // Send the seat assignment data to the backend
+                    try {
+                        const backendResponse = await fetch('add-student-to-exam.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+    
+                        const backendResult = await backendResponse.json();
+                        if (!backendResult.success) {
+                            console.error(`Error updating seat ${seatNumber}:`, backendResult.message);
+                        }
+                    } catch (error) {
+                        console.error(`Error updating seat ${seatNumber}:`, error);
                     }
-                    if (student.extratime !== 0) {
-                        additionalInfo += `<span style="color: red; font-size: 0.7em;">ET: ${student.extratime}</span> <br>`;
-                    }
-                    if (student.restbreak !== 0) {
-                        additionalInfo += `<span style="color: red; font-size: 0.7em;">Rest Break</span> <br>`;
-                    }
-
-                    seat.innerHTML = `${seatNumber} <br> ${student.firstname} ${student.lastname} <br> ${student.candidateno}`;
-            
+    
                     // Move to the next student
                     studentIndex++;
                 }
-            
+    
                 // Move to the next seat
                 seatNumber++;
             }
 
+            window.location.reload();
         } catch (error) {
             console.error('Fetch error:', error); // Log any errors from the fetch call
         }
-    });
+    });    
 });
 
 async function fetchSubject(subjectDropdown) {
