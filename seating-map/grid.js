@@ -210,7 +210,7 @@ async function fetchStudentData(seat, seatNumber) {
 
             // Update the seat's text while preserving buttons
             let studentInfo = document.createElement('div');
-            studentInfo.innerHTML = `${seatNumber} <br> ${data.firstname} ${data.lastname} <br><span style="font-size: 0.8em;">${data.candidateno}</span><br>${additionalInfo}`;
+            studentInfo.innerHTML = `${seatNumber}<br> ${data.firstname} ${data.lastname} <br><span style="font-size: 0.8em;">${data.candidateno}</span><br>${additionalInfo}`;
             
             // Remove any existing student info (optional)
             const existingInfo = seat.querySelector('.student-info');
@@ -464,6 +464,7 @@ async function fetchStudents(studentDropdown) {
 
 console.log(studentIDs);
 
+// Event listener for the Add Subject button
 addSubjectButton.addEventListener('click', function () {
     // Hide the Add By Student and Add By Class buttons
     addStudentButton.style.display = 'none';
@@ -491,11 +492,11 @@ addSubjectButton.addEventListener('click', function () {
         console.log('Selected subject ID:', selectedSubjectId);
     });
 
+    // Event listener for the submit button
     submitsubject.addEventListener('click', async function () {
         const selectedSubjectId = subjectDropdown.value;
         const examSessionId = document.getElementById('idexamsession').value;
-
-        const seatNumber = selectedSeatNumber;
+        let seatNumber = selectedSeatNumber;
 
         try {
             // Fetch students for the selected subject
@@ -507,26 +508,24 @@ addSubjectButton.addEventListener('click', function () {
 
             const result = await response.json();
 
-            if (result.success) {
-                console.log(result.students);  // Log the students array if the request was successful
-            } else {
-                console.error('Error:', result.message);  // Log the error message if the request wasn't successful
+            if (!result.success) {
+                console.error('Error:', result.message); // Log the error message
+                return;
             }
 
-            const numberToAdd = result.students.length;
+            const students = result.students;
 
-            console.log(numberToAdd);
+            seat = document.getElementById(`${seatNumber}`);
+            let studentIndex = 0;
 
-            for (let i = 0; i < numberToAdd; i++) {
-                const student = result.students[i];  // Get the student data
-                const studentSeatId = (parseInt(seatNumber) + i).toString();  // Compute the seat number
+            while (studentIndex < students.length) {
+                const seat = document.getElementById(`${seatNumber}`); // Get the current seat by its ID    
+            
+                // Check if seat is valid (i.e., contains a number, not filled with other content)
+                if (/^\+?\d+$/.test(seat.textContent)) {
+                    // Assign student names to the seat
+                    const student = students[studentIndex];
 
-                console.log(studentSeatId);  // Log seat number
-
-                // Find the seat element by its ID (you should have seat elements with corresponding IDs in your HTML)
-                const seat = document.getElementById(studentSeatId);
-
-                if (seat) {
                     let additionalInfo = '';
 
                     if (student.wordprocessor !== 0) {
@@ -539,32 +538,21 @@ addSubjectButton.addEventListener('click', function () {
                         additionalInfo += `<span style="color: red; font-size: 0.7em;">Rest Break</span> <br>`;
                     }
 
-                    // Create a container for the student info
-                    let studentInfo = document.createElement('div');
-                    studentInfo.innerHTML = `${studentSeatId} <br> ${student.firstname} ${student.lastname} <br><span style="font-size: 0.8em;">${student.candidateno}</span><br>${additionalInfo}`;
-
-                    // Remove any existing student info (optional)
-                    const existingInfo = seat.querySelector('.student-info');
-                    if (existingInfo) {
-                        seat.removeChild(existingInfo);
-                    }
-
-                    studentInfo.className = 'student-info';  // Add class for styling
-                    seat.appendChild(studentInfo);
-
-                    // Store the student's ID associated with the seat number
-                    studentIDs[`${studentSeatId}`] = student.idstudents;
-                } else {
-                    console.error(`Seat element with ID ${studentSeatId} not found.`);
+                    seat.innerHTML = `${seatNumber} <br> ${student.firstname} ${student.lastname} <br> ${student.candidateno}`;
+            
+                    // Move to the next student
+                    studentIndex++;
                 }
+            
+                // Move to the next seat
+                seatNumber++;
             }
 
         } catch (error) {
-            console.error('Fetch error:', error);  // Log any errors from the fetch call
+            console.error('Fetch error:', error); // Log any errors from the fetch call
         }
     });
 });
-
 
 async function fetchSubject(subjectDropdown) {
     try {

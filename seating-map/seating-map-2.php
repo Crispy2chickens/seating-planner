@@ -74,9 +74,11 @@ $_SESSION['idvenue'] = '2';
 
                 <div class="entity-container">
                     <h1 class="exam-title"><?php echo $title; ?></h1>
-                    <a class="edit-icon">
-                        <img src="../img/edit-icon-2.png" alt="Edit">
-                    </a>
+                    <?php if ($isCoordinator == 1): ?>
+                        <a class="edit-icon">
+                            <img src="../img/edit-icon-2.png" alt="Edit">
+                        </a>
+                    <?php endif; ?>
                 </div>
 
                 <div class="edit-section">
@@ -94,9 +96,11 @@ $_SESSION['idvenue'] = '2';
                 <div class="exam-timing">
                     <div class="entity-container">
                         <p class="date-container">Date: <?php echo $date; ?></p>
-                        <a class="edit-icon">
-                            <img src="../img/edit-icon-2.png" alt="Edit">
-                        </a>
+                        <?php if ($isCoordinator == 1): ?>
+                            <a class="edit-icon">
+                                <img src="../img/edit-icon-2.png" alt="Edit">
+                            </a>
+                        <?php endif; ?>
                     </div>
 
                     <div class="edit-section">
@@ -113,9 +117,11 @@ $_SESSION['idvenue'] = '2';
 
                     <div class="entity-container">
                         <p class="start-time">Start Time: <?php echo $starttime; ?></p>
-                        <a class="edit-icon">
-                            <img src="../img/edit-icon-2.png" alt="Edit">
-                        </a>
+                        <?php if ($isCoordinator == 1): ?>
+                            <a class="edit-icon">
+                                <img src="../img/edit-icon-2.png" alt="Edit">
+                            </a>
+                        <?php endif; ?>
                     </div>
 
                     <div class="edit-section">
@@ -132,7 +138,9 @@ $_SESSION['idvenue'] = '2';
                 </div>
             </div>
 
-            <div class="map-2" id="map" data-is-coordinator="<?php echo htmlspecialchars(json_encode($_SESSION['coordinator'])); ?>">
+            <div class="map-2"
+                id="map"
+                data-is-coordinator="<?php echo htmlspecialchars(json_encode($_SESSION['coordinator'])); ?>">
                 <!-- Seats Here -->
             </div>
 
@@ -142,6 +150,7 @@ $_SESSION['idvenue'] = '2';
                     <button id="add-subject" class="add-subject">Add By Subjects</button>
                 </div>
             </div>
+
         </div>
 
         <div class="right-page">
@@ -166,7 +175,7 @@ $_SESSION['idvenue'] = '2';
                                 </select>
                                 <br>
                                 <input type="hidden" id="idexamsession" value="<?php echo $_SESSION['idexamsession']; ?>"> <!-- Set exam session ID dynamically -->
-                                <input type="hidden" id="idvenue" value=2>
+                                <input type="hidden" id="idvenue" value="<?php echo $_SESSION['idvenue']; ?>">
                                 <button type="submit" class="submit-changes">Add Invigilator</button>
                             </form>
                         </div>
