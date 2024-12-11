@@ -79,7 +79,7 @@ async function fetchStudentData(seat, seatNumber) {
 
             // Update the seat's text while preserving buttons
             let studentInfo = document.createElement('div');
-            studentInfo.innerHTML = `${data.firstname} ${data.lastname} <br><span style="font-size: 0.8em;">${data.candidateno}</span><br>${additionalInfo}`;
+            studentInfo.innerHTML = `${seatNumber}<br> ${data.firstname} ${data.lastname} <br><span style="font-size: 0.8em;">${data.candidateno}</span><br>${additionalInfo}`;
             
             // Remove any existing student info (optional)
             const existingInfo = seat.querySelector('.student-info');
