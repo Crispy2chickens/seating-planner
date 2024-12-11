@@ -407,7 +407,7 @@ h1{
     cursor: pointer;
 }  
 
-#add-student {
+#add-student, #add-subject {
     display: block;
     background-color: #071a45;
     width: 150px;
@@ -418,12 +418,12 @@ h1{
     margin: 10px;
 }
 
-#student-dropdown{
+#student-dropdown, #subject-dropdown{
     display: block;
     margin: 10px;
 }
 
-#submit-student{
+#submit-student, #submit-subject{
     width: 110px;
     margin: 0 0 10px 0;
     background-color: #071a45;
@@ -432,6 +432,10 @@ h1{
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
+}
+
+#submit-subject {
+    width: 96px;
 }
 
 @-webkit-keyframes fadeIn {

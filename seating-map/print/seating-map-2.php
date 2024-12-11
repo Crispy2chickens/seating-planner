@@ -26,9 +26,9 @@ $_SESSION['idvenue'] = '2';
 
         <div class="middle-menu-bar">
             <div class="middle-menu-bar">
-                <a href="seating-map-1-print.php" class="nav-link" onclick="setActive(this)">Venue 1</a>
-                <a href="seating-map-2-print.php" class="nav-link active" onclick="setActive(this)">Venue 2</a>
-                <a href="seating-map-3-print.php" class="nav-link" onclick="setActive(this)">Venue 3</a>
+                <a href="seating-map-1.php" class="nav-link" onclick="setActive(this)">Venue 1</a>
+                <a href="seating-map-2.php" class="nav-link active" onclick="setActive(this)">Venue 2</a>
+                <a href="seating-map-3.php" class="nav-link" onclick="setActive(this)">Venue 3</a>
             </div>
 
         </div>

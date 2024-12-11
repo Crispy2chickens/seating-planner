@@ -92,6 +92,18 @@ function createSeat(row, col) {
                         plusButton.style.opacity = 1;
 
                         addstudentmodal.style.display = 'none';
+                        addStudentButton.style.display = 'block';
+                        addSubjectButton.style.display = 'block';
+
+                        const subjectDropdown = document.querySelector('#subject-dropdown')
+                        const submitsubject = document.querySelector('#submit-subject')
+                        subjectDropdown.style.display = 'none';
+                        submitsubject.style.display = 'none';
+
+                        const studentDropdown = document.querySelector('#student-dropdown')
+                        const submitstudent = document.querySelector('#submit-student')
+                        studentDropdown.style.display = 'none';
+                        submitstudent.style.display = 'none';
                     }
                 });
 
@@ -348,14 +360,14 @@ async function saveSeatPositions(seat1Id, seat2Id) {
 
 // Get elements for Add By Student button, modal content
 const addStudentButton = document.querySelector('.add-student');
-const addClassButton = document.querySelector('.add-class');
+const addSubjectButton = document.querySelector('.add-subject');
 const addstudentmodalcontent = document.querySelector('.addstudent-modal-content');
 
 // Add click event listener for Add By Student button
 addStudentButton.addEventListener('click', function () {
     // Hide the Add By Student and Add By Class buttons
     addStudentButton.style.display = 'none';
-    addClassButton.style.display = 'none';
+    addSubjectButton.style.display = 'none';
 
     // Create the dropdown
     const studentDropdown = document.createElement('select');
@@ -416,7 +428,6 @@ addStudentButton.addEventListener('click', function () {
         .then(response => response.json())
         .then(result => {
             if (result.success) {
-                alert('Student successfully added to exam.');
                 window.location.reload()
             } else {
                 alert('Error adding student to the exam.');
@@ -452,6 +463,55 @@ async function fetchStudents(studentDropdown) {
 }
 
 console.log(studentIDs);
+
+addSubjectButton.addEventListener('click', function () {
+    // Hide the Add By Student and Add By Class buttons
+    addStudentButton.style.display = 'none';
+    addSubjectButton.style.display = 'none';
+
+    // Create the dropdown
+    const subjectDropdown = document.createElement('select');
+    subjectDropdown.id = 'subject-dropdown';
+    subjectDropdown.innerHTML = '<option value="">Select Subject</option>'; 
+
+    const submitsubject = document.createElement('button');
+    submitsubject.id = 'submit-subject';
+    submitsubject.innerHTML = 'Add Subject';
+
+    // Append the dropdown to the modal content
+    addstudentmodalcontent.appendChild(subjectDropdown);
+    addstudentmodalcontent.appendChild(submitsubject);
+
+    // Fetch subjects from backend and populate the dropdown
+    fetchSubject(subjectDropdown);
+
+    // Event listener for when a subject is selected from the dropdown
+    subjectDropdown.addEventListener('change', function () {
+        const selectedSubjectId = subjectDropdown.value;
+        console.log('Selected subject ID:', selectedSubjectId);
+    });
+});
+
+async function fetchSubject(subjectDropdown) {
+    try {
+        const response = await fetch('get-subjects.php'); 
+        const data = await response.json();
+
+        if (data.success) {
+            data.subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject.idsubjects; // Adjust according to backend structure
+                option.textContent = `${subject.name}`; // Adjust according to backend structure
+                subjectDropdown.appendChild(option);
+            });
+        } else {
+            alert('Failed to fetch subjects. Please try again later.');
+        }
+    } catch (error) {
+        console.error('Error fetching subjects:', error);
+        alert('Error fetching subjects. Please check your network or try again later.');
+    }
+}
 
 function highlightDuplicateSeats(studentIDs) {
     // Create a map to count occurrences of each idstudent

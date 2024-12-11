@@ -1,7 +1,8 @@
 <?php
 include '../../session.php'; // Adjust the path to where session.php is located
 
-$_SESSION['idvenue'] = '1';
+$isCoordinator = $_SESSION['coordinator'];
+$_SESSION['idvenue'] = '3';
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@ $_SESSION['idvenue'] = '1';
 
 <body>
     <div class="menu-bar">
-        <div class="left-menu-bar">
+        <div class="left-menu-bar">x
             <a href="../../dashboard/u0.php" class="arrow-container">
                 <span class="arrow">&#x25C0;</span>
                 <span class="arrow second">&#x25C0;</span>
@@ -25,9 +26,9 @@ $_SESSION['idvenue'] = '1';
 
         <div class="middle-menu-bar">
             <div class="middle-menu-bar">
-                <a href="seating-map-1-print.php" class="nav-link active" onclick="setActive(this)">Venue 1</a>
-                <a href="seating-map-2-print.php" class="nav-link" onclick="setActive(this)">Venue 2</a>
-                <a href="seating-map-3-print.php" class="nav-link" onclick="setActive(this)">Venue 3</a>
+                <a href="seating-map-1.php" class="nav-link" onclick="setActive(this)">Venue 1</a>
+                <a href="seating-map-2.php" class="nav-link" onclick="setActive(this)">Venue 2</a>
+                <a href="seating-map-3.php" class="nav-link active" onclick="setActive(this)">Venue 3</a>
             </div>
 
         </div>
@@ -87,20 +88,9 @@ $_SESSION['idvenue'] = '1';
                 </div>
             </div>
 
-            <div class="map-1"
-                id="map"
-                style="height: calc(100vh - 220px);"
-                data-is-coordinator="<?php echo htmlspecialchars(json_encode($_SESSION['coordinator'])); ?>">
+            <div class="map-3" style="height: calc(100vh - 220px);" id="map" data-is-coordinator="<?php echo htmlspecialchars(json_encode($_SESSION['coordinator'])); ?>">
                 <!-- Seats Here -->
             </div>
-
-            <div class="addstudent-modal">
-                <div class="addstudent-modal-content">
-                    <button id="add-student" class="add-student">Add By Student</button>
-                    <button id="add-student" class="add-class">Add By Subjects</button>
-                </div>
-            </div>
-
         </div>
     </div>
 

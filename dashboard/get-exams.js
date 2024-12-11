@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <button class="operation-buttons" onclick="setSessionAndRedirect('${row.title}', '${row.date}', '${row.starttime}', '${row.idexamsession}', '../seating-map/seating-map-1.php')">
                                     <img src="../img/edit-icon.png">
                                 </button>
-                                <button class="operation-buttons" onclick="setSessionAndRedirect('${row.title}', '${row.date}', '${row.starttime}', '${row.idexamsession}', '../seating-map/print/seating-map-1-print.php')"><img src="../img/print-icon.png"></button>
+                                <button class="operation-buttons" onclick="setSessionAndRedirect('${row.title}', '${row.date}', '${row.starttime}', '${row.idexamsession}', '../seating-map/print/seating-map-1.php')"><img src="../img/print-icon.png"></button>
                                 <button class="operation-buttons" data-id="${row.idexamsession}" data-action="archive"><img src="../img/archive-icon.png"></button>
                                 <button class="operation-buttons" data-id="${row.idexamsession}" data-action="delete-exam"><img src="../img/trash-icon.png"></button>
                             </td>`;
